@@ -57,6 +57,7 @@ TEST(Array, FirstElementAccess)
 {
 	DS::Array<int>* arr = new DS::Array<int>();
 	arr->push(10);
+	arr->push(20);
 
 	EXPECT_EQ(arr->first(), 10);
 }
@@ -66,4 +67,20 @@ TEST(Array, FirstElementAccessWithNoSuchElementException)
 	DS::Array<int>* arr = new DS::Array<int>();
 
 	EXPECT_THROW(arr->first(), DS::NoSuchElementException);
+}
+
+TEST(Array, LastElementAccess)
+{
+	DS::Array<int>* arr = new DS::Array<int>();
+	arr->push(10);
+	arr->push(20);
+
+	EXPECT_EQ(arr->last(), 20);
+}
+
+TEST(Array, LastElementAccessWithNoSuchElementException)
+{
+	DS::Array<int>* arr = new DS::Array<int>();
+
+	EXPECT_THROW(arr->last(), DS::NoSuchElementException);
 }

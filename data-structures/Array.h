@@ -22,6 +22,7 @@ namespace DS
 		void push(T value);
 
 		T& first();
+		T& last();
 		
 		T& operator[](int index);
 		constexpr T& operator[](int index) const;
@@ -72,6 +73,16 @@ namespace DS
 			throw NoSuchElementException("The array is empty.");
 		}
 		return *values;
+	}
+
+	template<typename T>
+	T& Array<T>::last()
+	{
+		if (size <= 0)
+		{
+			throw NoSuchElementException("The array is empty.");
+		}
+		return values[size - 1];
 	}
 
 	template<typename T>
