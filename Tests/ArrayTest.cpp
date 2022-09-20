@@ -100,3 +100,19 @@ TEST(Array, LastElementAccessWithNoSuchElementException)
 
 	EXPECT_THROW(arr->last(), DS::NoSuchElementException);
 }
+
+TEST(Array, LastOrNullElementAccessOfExistingElement)
+{
+	DS::Array<int>* arr = new DS::Array<int>();
+	arr->push(10);
+	arr->push(20);
+
+	EXPECT_EQ(*arr->lastOrNull(), 20);
+}
+
+TEST(Array, LastOrNullElementAccessOfEmptyArray)
+{
+	DS::Array<int>* arr = new DS::Array<int>();
+
+	EXPECT_EQ(arr->lastOrNull(), nullptr);
+}

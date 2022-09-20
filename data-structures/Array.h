@@ -24,6 +24,7 @@ namespace DS
 		T& first();
 		T* firstOrNull();
 		T& last();
+		T* lastOrNull();
 		
 		T& operator[](int index);
 		constexpr T& operator[](int index) const;
@@ -79,11 +80,7 @@ namespace DS
 	template<typename T>
 	T* Array<T>::firstOrNull()
 	{
-		if (size <= 0)
-		{
-			return nullptr;
-		}
-		return &first();
+		return size > 0 ? &first() : nullptr;
 	}
 
 	template<typename T>
@@ -94,6 +91,12 @@ namespace DS
 			throw NoSuchElementException("The array is empty.");
 		}
 		return values[size - 1];
+	}
+
+	template<typename T>
+	T* Array<T>::lastOrNull()
+	{
+		return size > 0 ? &last() : nullptr;
 	}
 
 	template<typename T>
