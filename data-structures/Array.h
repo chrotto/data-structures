@@ -22,6 +22,7 @@ namespace DS
 		void push(T value);
 
 		T& first();
+		T* firstOrNull();
 		T& last();
 		
 		T& operator[](int index);
@@ -73,6 +74,16 @@ namespace DS
 			throw NoSuchElementException("The array is empty.");
 		}
 		return *values;
+	}
+
+	template<typename T>
+	T* Array<T>::firstOrNull()
+	{
+		if (size <= 0)
+		{
+			return nullptr;
+		}
+		return &first();
 	}
 
 	template<typename T>

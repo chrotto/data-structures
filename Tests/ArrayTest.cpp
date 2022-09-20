@@ -69,6 +69,22 @@ TEST(Array, FirstElementAccessWithNoSuchElementException)
 	EXPECT_THROW(arr->first(), DS::NoSuchElementException);
 }
 
+TEST(Array, FirstOrNullElementAccessOfExistingElement)
+{
+	DS::Array<int>* arr = new DS::Array<int>();
+	arr->push(10);
+	arr->push(20);
+
+	EXPECT_EQ(*arr->firstOrNull(), 10);
+}
+
+TEST(Array, FirstOrNullElementAccessOfEmptyArray)
+{
+	DS::Array<int>* arr = new DS::Array<int>();
+
+	EXPECT_EQ(arr->firstOrNull(), nullptr);
+}
+
 TEST(Array, LastElementAccess)
 {
 	DS::Array<int>* arr = new DS::Array<int>();
