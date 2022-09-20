@@ -116,3 +116,18 @@ TEST(Array, LastOrNullElementAccessOfEmptyArray)
 
 	EXPECT_EQ(arr->lastOrNull(), nullptr);
 }
+
+TEST(Array, EmptyCheckOnEmptyArray)
+{
+	DS::Array<int>* arr = new DS::Array<int>();
+
+	EXPECT_EQ(arr->isEmpty(), true);
+}
+
+TEST(Array, EmptyCheckOnNonEmptyArray)
+{
+	DS::Array<int>* arr = new DS::Array<int>();
+	arr->push(10);
+
+	EXPECT_EQ(arr->isEmpty(), false);
+}

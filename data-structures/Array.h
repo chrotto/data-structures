@@ -18,6 +18,7 @@ namespace DS
 		~Array();
 
 		constexpr int getSize() const;
+		bool isEmpty() const;
 
 		void push(T value);
 
@@ -58,6 +59,12 @@ namespace DS
 	}
 
 	template<typename T>
+	bool Array<T>::isEmpty() const
+	{
+		return size == 0;
+	}
+
+	template<typename T>
 	void Array<T>::push(T value)
 	{
 		if (size == maxSize)
@@ -70,7 +77,7 @@ namespace DS
 	template<typename T>
 	T& Array<T>::first()
 	{
-		if (size <= 0) 
+		if (isEmpty()) 
 		{
 			throw NoSuchElementException("The array is empty.");
 		}
@@ -80,13 +87,13 @@ namespace DS
 	template<typename T>
 	T* Array<T>::firstOrNull()
 	{
-		return size > 0 ? &first() : nullptr;
+		return !isEmpty() ? &first() : nullptr;
 	}
 
 	template<typename T>
 	T& Array<T>::last()
 	{
-		if (size <= 0)
+		if (isEmpty())
 		{
 			throw NoSuchElementException("The array is empty.");
 		}
@@ -96,7 +103,7 @@ namespace DS
 	template<typename T>
 	T* Array<T>::lastOrNull()
 	{
-		return size > 0 ? &last() : nullptr;
+		return !isEmpty() ? &last() : nullptr;
 	}
 
 	template<typename T>
