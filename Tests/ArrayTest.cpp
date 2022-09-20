@@ -52,3 +52,18 @@ TEST(Array, IndexOperatorAccessOutOfRange)
 	EXPECT_THROW((*arr)[1], DS::OutOfRangeException);
 	EXPECT_THROW((*arr)[-1], DS::OutOfRangeException);
 }
+
+TEST(Array, FirstElementAccess)
+{
+	DS::Array<int>* arr = new DS::Array<int>();
+	arr->push(10);
+
+	EXPECT_EQ(arr->first(), 10);
+}
+
+TEST(Array, FirstElementAccessWithNoSuchElementException)
+{
+	DS::Array<int>* arr = new DS::Array<int>();
+
+	EXPECT_THROW(arr->first(), DS::NoSuchElementException);
+}

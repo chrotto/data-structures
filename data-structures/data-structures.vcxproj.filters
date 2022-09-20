@@ -21,12 +21,18 @@
     <ClCompile Include="Exceptions\OutOfRangeException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Exceptions\NoSuchElementException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Array.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Exceptions\OutOfRangeException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Exceptions\NoSuchElementException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

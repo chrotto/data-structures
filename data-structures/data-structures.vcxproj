@@ -129,11 +129,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Exceptions\NoSuchElementException.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Exceptions\OutOfRangeException.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Array.h" />
+    <ClInclude Include="Exceptions\NoSuchElementException.h" />
     <ClInclude Include="Exceptions\OutOfRangeException.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

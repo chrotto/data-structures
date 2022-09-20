@@ -1,5 +1,6 @@
 #pragma once
 #include "Exceptions/OutOfRangeException.h"
+#include "Exceptions/NoSuchElementException.h"
 
 namespace DS
 {
@@ -19,6 +20,8 @@ namespace DS
 		constexpr int getSize() const;
 
 		void push(T value);
+
+		T& first();
 		
 		T& operator[](int index);
 		constexpr T& operator[](int index) const;
@@ -59,6 +62,16 @@ namespace DS
 			resize(maxSize + 1);
 		}
 		values[size++] = value;
+	}
+
+	template<typename T>
+	T& Array<T>::first()
+	{
+		if (size <= 0) 
+		{
+			throw NoSuchElementException("The array is empty.");
+		}
+		return *values;
 	}
 
 	template<typename T>
