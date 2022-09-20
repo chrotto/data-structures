@@ -1,4 +1,5 @@
 #pragma once
+#include "Exceptions/OutOfRangeException.h"
 
 namespace DS
 {
@@ -15,9 +16,12 @@ namespace DS
 		explicit Array(int size);
 		~Array();
 
-		const int getSize() const;
+		constexpr int getSize() const;
 
 		void push(T value);
+		
+		T& operator[](int index);
+		constexpr T& operator[](int index) const;
 
 	private:
 		void resize(int newSize);
@@ -42,7 +46,7 @@ namespace DS
 	}
 
 	template<typename T>
-	const int Array<T>::getSize() const
+	constexpr int Array<T>::getSize() const
 	{
 		return size;
 	}
@@ -55,6 +59,26 @@ namespace DS
 			resize(maxSize + 1);
 		}
 		values[size++] = value;
+	}
+
+	template<typename T>
+	T& Array<T>::operator[](int index)
+	{
+		if (index < 0 || index >= size)
+		{
+			throw OutOfRangeException(index);
+		}
+		return values[index];
+	}
+
+	template<typename T>
+	constexpr T& Array<T>::operator[](int index) const
+	{
+		if (index < 0 || index >= size)
+		{
+			throw OutOfRangeException(index);
+		}
+		return values[index];
 	}
 
 	template<typename T>

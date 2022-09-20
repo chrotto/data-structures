@@ -1,7 +1,8 @@
 #include "pch.h"
 #include "Array.h"
 
-TEST(Array, InitializeWithSizeZero) {
+TEST(Array, InitializeWithSizeZero)
+{
 	DS::Array<int>* arr = new DS::Array<int>();
 
 	EXPECT_EQ(arr->getSize(), 0);
@@ -9,7 +10,8 @@ TEST(Array, InitializeWithSizeZero) {
 	delete arr;
 }
 
-TEST(Array, InitializeWithCustomSize) {
+TEST(Array, InitializeWithCustomSize)
+{
 	DS::Array<int>* arr = new DS::Array<int>(20);
 
 	EXPECT_EQ(arr->getSize(), 20);
@@ -17,7 +19,8 @@ TEST(Array, InitializeWithCustomSize) {
 	delete arr;
 }
 
-TEST(Array, AddElement) {
+TEST(Array, AddElement)
+{
 	DS::Array<int>* arr = new DS::Array<int>();
 
 	EXPECT_EQ(arr->getSize(), 0);
@@ -27,4 +30,25 @@ TEST(Array, AddElement) {
 	EXPECT_EQ(arr->getSize(), 2);
 
 	delete arr;
+}
+
+TEST(Array, IndexOperatorAccess)
+{
+	DS::Array<int>* arr = new DS::Array<int>();
+	arr->push(10);
+	arr->push(20);
+	arr->push(30);
+
+	EXPECT_EQ((*arr)[0], 10);
+	EXPECT_EQ((*arr)[1], 20);
+	EXPECT_EQ((*arr)[2], 30);
+}
+
+TEST(Array, IndexOperatorAccessOutOfRange)
+{
+	DS::Array<int>* arr = new DS::Array<int>();
+	arr->push(10);
+
+	EXPECT_THROW((*arr)[1], DS::OutOfRangeException);
+	EXPECT_THROW((*arr)[-1], DS::OutOfRangeException);
 }
