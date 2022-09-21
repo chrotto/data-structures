@@ -26,6 +26,8 @@ namespace DS
 		T* firstOrNull();
 		T& last();
 		T* lastOrNull();
+
+		bool contains(T element) const;
 		
 		T& operator[](int index);
 		constexpr T& operator[](int index) const;
@@ -104,6 +106,19 @@ namespace DS
 	T* Array<T>::lastOrNull()
 	{
 		return !isEmpty() ? &last() : nullptr;
+	}
+
+	template<typename T>
+	bool Array<T>::contains(T element) const
+	{
+		for (int i = 0; i < size; ++i)
+		{
+			if (values[i] == element)
+			{
+				return true;
+			};
+		}
+		return false;
 	}
 
 	template<typename T>

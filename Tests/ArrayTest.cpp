@@ -131,3 +131,23 @@ TEST(Array, EmptyCheckOnNonEmptyArray)
 
 	EXPECT_EQ(arr->isEmpty(), false);
 }
+
+TEST(Array, ContainsElement)
+{
+	DS::Array<int>* arr = new DS::Array<int>();
+	arr->push(10);
+	arr->push(20);
+	arr->push(30);
+
+	EXPECT_TRUE(arr->contains(10));
+	EXPECT_TRUE(arr->contains(20));
+	EXPECT_TRUE(arr->contains(30));
+	EXPECT_FALSE(arr->contains(40));
+}
+
+TEST(Array, ContainsElementInEmptyArry)
+{
+	DS::Array<int>* arr = new DS::Array<int>();
+
+	EXPECT_FALSE(arr->contains(10));
+}
