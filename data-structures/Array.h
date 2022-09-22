@@ -1,4 +1,5 @@
 #pragma once
+#include <functional>
 #include "Exceptions/OutOfRangeException.h"
 #include "Exceptions/NoSuchElementException.h"
 
@@ -15,6 +16,8 @@ namespace DS
 	public:
 		Array();
 		explicit Array(int size);
+		Array(const Array<T>& other);
+		Array(Array<T>&& other);
 		~Array();
 
 		constexpr int getSize() const;
@@ -28,7 +31,12 @@ namespace DS
 		T* lastOrNull();
 
 		bool contains(T element) const;
-		
+
+		Array<T> filter(std::function<bool(T&)> predicate);
+
+		Array<T>& operator=(const Array<T>& other);
+		Array<T>& operator=(Array<T>&& other);
+
 		T& operator[](int index);
 		constexpr T& operator[](int index) const;
 
@@ -46,6 +54,29 @@ namespace DS
 	Array<T>::Array(int size) : maxSize(size), size(size)
 	{
 		values = new T[maxSize];
+	}
+
+	template<typename T>
+	Array<T>::Array(const Array<T>& other)
+	{
+		maxSize = other.maxSize;
+		size = other.size;
+		values = new T[maxSize];
+
+		for (int i = 0; i < size; ++i)
+		{
+			values[i] = other.values[i];
+		}
+	}
+
+	template<typename T>
+	Array<T>::Array(Array<T>&& other)
+	{
+		maxSize = other.maxSize;
+		size = other.size;
+		values = other.values;
+
+		other.values = nullptr;
 	}
 
 	template<typename T>
@@ -79,7 +110,7 @@ namespace DS
 	template<typename T>
 	T& Array<T>::first()
 	{
-		if (isEmpty()) 
+		if (isEmpty())
 		{
 			throw NoSuchElementException("The array is empty.");
 		}
@@ -119,6 +150,53 @@ namespace DS
 			};
 		}
 		return false;
+	}
+
+	template<typename T>
+	Array<T> Array<T>::filter(std::function<bool(T&)> predicate)
+	{
+		Array<T> filteredArray = Array<T>();
+		for (int i = 0; i < size; ++i)
+		{
+			if (predicate(values[i]))
+			{
+				filteredArray.push(values[i]);
+			}
+		}
+		return filteredArray;
+	}
+
+	template<typename T>
+	Array<T>& Array<T>::operator=(const Array<T>& other)
+	{
+		if (this != &other)
+		{
+			maxSize = other.maxSize;
+			size = other.size;
+			delete[] values;
+			values = new T[maxSize];
+
+			for (int i = 0; i < size; ++i)
+			{
+				values[i] = other.values[i];
+			}
+		}
+		return *this;
+	}
+
+	template<typename T>
+	Array<T>& Array<T>::operator=(Array<T>&& other)
+	{
+		if (this != &other)
+		{
+			maxSize = other.maxSize;
+			size = other.size;
+
+			T* tmp = values;
+			values = other.values;
+			other.values = tmp;
+		}
+		return *this;
 	}
 
 	template<typename T>
