@@ -34,6 +34,8 @@ namespace DS
 		bool any(std::function<bool(T&)> predicate);
 
 		Array<T> filter(std::function<bool(T&)> predicate);
+		template<typename R>
+		Array<R> map(std::function<R(T)> transform);
 
 		Array<T>& operator=(const Array<T>& other);
 		Array<T>& operator=(Array<T>&& other);
@@ -278,5 +280,17 @@ namespace DS
 
 		delete[] values;
 		values = newValues;
+	}
+
+	template<typename T>
+	template<typename R>
+	Array<R> Array<T>::map(std::function<R(T)> transform)
+	{
+		Array<R> mappedArray = Array<R>(size);
+		for (int i = 0; i < size; ++i)
+		{
+			mappedArray[i] = transform(values[i]);
+		}
+		return mappedArray;
 	}
 }

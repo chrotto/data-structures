@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Array.h"
+#include <string>
 
 TEST(Array, InitializeWithSizeZero)
 {
@@ -155,7 +156,7 @@ TEST(Array, FilterArrayByEvenNumbers)
 	arr.push(6);
 	arr.push(6);
 
-	DS::Array<int> filteredArray = arr.filter([](int x) { return x % 2 == 0; });
+	DS::Array<int> filteredArray = arr.filter([](int& x) { return x % 2 == 0; });
 	EXPECT_EQ(filteredArray.getSize(), 3);
 	EXPECT_EQ(filteredArray[0], 2);
 	EXPECT_EQ(filteredArray[1], 6);
@@ -166,7 +167,7 @@ TEST(Array, FilterArrayEmptyArray)
 {
 	DS::Array<int> arr = DS::Array<int>();
 
-	DS::Array<int> filteredArray = arr.filter([](int x) { return x % 2 == 0; });
+	DS::Array<int> filteredArray = arr.filter([](int& x) { return x % 2 == 0; });
 	EXPECT_EQ(filteredArray.getSize(), 0);
 }
 
@@ -239,7 +240,7 @@ TEST(Array, ContainsOneElementFulfillingThePredicate)
 	arr.push(3);
 	arr.push(4);
 
-	auto predicate = [](int x) { return x % 2 == 0; };
+	auto predicate = [](int& x) { return x % 2 == 0; };
 	EXPECT_TRUE(arr.any(predicate), true);
 }
 
@@ -251,7 +252,7 @@ TEST(Array, ContainsNoElementFulfillingThePredicate)
 	arr.push(3);
 	arr.push(4);
 
-	auto predicate = [](int x) { return x == 0; };
+	auto predicate = [](int& x) { return x == 0; };
 	EXPECT_FALSE(arr.any(predicate));
 }
 
@@ -259,6 +260,60 @@ TEST(Array, ContainsOneElementFulfillingThePredicateInEmptyArray)
 {
 	DS::Array<int> arr = DS::Array<int>();
 
-	auto predicate = [](int x) { return x == 0; };
+	auto predicate = [](int& x) { return x == 0; };
 	EXPECT_FALSE(arr.any(predicate), false);
+}
+
+TEST(Array, MapArrayOfEvenNumbersToOddNumbers)
+{
+	DS::Array<int> arr = DS::Array<int>();
+	arr.push(2);
+	arr.push(4);
+	arr.push(6);
+	arr.push(8);
+
+	auto transform = [](int x) {return x + 1; };
+	DS::Array<int> mappedArray = arr.map<int>(transform);
+
+	EXPECT_EQ(arr[0], 2);
+	EXPECT_EQ(arr[1], 4);
+	EXPECT_EQ(arr[2], 6);
+	EXPECT_EQ(arr[3], 8);
+
+	EXPECT_EQ(mappedArray[0], 3);
+	EXPECT_EQ(mappedArray[1], 5);
+	EXPECT_EQ(mappedArray[2], 7);
+	EXPECT_EQ(mappedArray[3], 9);
+}
+
+TEST(Array, MapArrayOfIntsToStrings)
+{
+	DS::Array<int> arr = DS::Array<int>();
+	arr.push(2);
+	arr.push(4);
+	arr.push(6);
+	arr.push(8);
+
+	auto transform = [](int x) {return std::to_string(x); };
+	DS::Array<std::string> mappedArray = arr.map<std::string>(transform);
+
+	EXPECT_EQ(arr[0], 2);
+	EXPECT_EQ(arr[1], 4);
+	EXPECT_EQ(arr[2], 6);
+	EXPECT_EQ(arr[3], 8);
+
+	EXPECT_EQ(mappedArray[0], "2");
+	EXPECT_EQ(mappedArray[1], "4");
+	EXPECT_EQ(mappedArray[2], "6");
+	EXPECT_EQ(mappedArray[3], "8");
+}
+
+TEST(Array, MapOfEmptyArray)
+{
+	DS::Array<int> arr = DS::Array<int>();
+
+	auto transform = [](int x) {return x + 1; };
+	DS::Array<int> mappedArray = arr.map<int>(transform);
+
+	EXPECT_TRUE(mappedArray.isEmpty());
 }
