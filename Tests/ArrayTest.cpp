@@ -241,7 +241,7 @@ TEST(Array, ContainsOneElementFulfillingThePredicate)
 	arr.push(4);
 
 	auto predicate = [](int& x) { return x % 2 == 0; };
-	EXPECT_TRUE(arr.any(predicate), true);
+	EXPECT_TRUE(arr.any(predicate));
 }
 
 TEST(Array, ContainsNoElementFulfillingThePredicate)
@@ -261,7 +261,7 @@ TEST(Array, ContainsOneElementFulfillingThePredicateInEmptyArray)
 	DS::Array<int> arr = DS::Array<int>();
 
 	auto predicate = [](int& x) { return x == 0; };
-	EXPECT_FALSE(arr.any(predicate), false);
+	EXPECT_FALSE(arr.any(predicate));
 }
 
 TEST(Array, MapArrayOfEvenNumbersToOddNumbers)
@@ -316,4 +316,32 @@ TEST(Array, MapOfEmptyArray)
 	DS::Array<int> mappedArray = arr.map<int>(transform);
 
 	EXPECT_TRUE(mappedArray.isEmpty());
+}
+
+TEST(Array, ReduceEmptyArray)
+{
+	DS::Array<int> arr = DS::Array<int>();
+	auto operation = [](int acc, int& x) { return acc + x; };
+
+	EXPECT_THROW(arr.reduce(operation), DS::UnsupportedOperationException);
+}
+
+TEST(Array, ReduceArrayWithOneElement)
+{
+	DS::Array<int> arr = DS::Array<int>();
+	arr.push(1);
+	auto operation = [](int acc, int& x) { return acc + x; };
+
+	EXPECT_EQ(arr.reduce(operation), 1);
+}
+
+TEST(Array, ReduceArrayWithMultipleElements)
+{
+	DS::Array<int> arr = DS::Array<int>();
+	arr.push(1);
+	arr.push(2);
+	arr.push(3);
+	auto operation = [](int acc, int& x) { return acc + x; };
+
+	EXPECT_EQ(arr.reduce(operation), 6);
 }

@@ -87,7 +87,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>OutOfRangeException.obj;NoSuchElementException.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OutOfRangeException.obj;NoSuchElementException.obj;UnsupportedOperationException.obj;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)data-structures\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -123,7 +123,7 @@
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <AdditionalDependencies>OutOfRangeException.obj;NoSuchElementException.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OutOfRangeException.obj;NoSuchElementException.obj;UnsupportedOperationException.obj;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)data-structures\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>

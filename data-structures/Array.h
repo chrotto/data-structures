@@ -2,6 +2,7 @@
 #include <functional>
 #include "Exceptions/OutOfRangeException.h"
 #include "Exceptions/NoSuchElementException.h"
+#include "Exceptions/UnsupportedOperationException.h"
 
 namespace DS
 {
@@ -36,6 +37,7 @@ namespace DS
 		Array<T> filter(std::function<bool(T&)> predicate);
 		template<typename R>
 		Array<R> map(std::function<R(T)> transform);
+		T reduce(std::function<T(T, T&)> operation);
 
 		Array<T>& operator=(const Array<T>& other);
 		Array<T>& operator=(Array<T>&& other);
@@ -292,5 +294,21 @@ namespace DS
 			mappedArray[i] = transform(values[i]);
 		}
 		return mappedArray;
+	}
+
+	template<typename T>
+	inline T Array<T>::reduce(std::function<T(T, T&)> operation)
+	{
+		if (isEmpty())
+		{
+			throw UnsupportedOperationException();
+		}
+		
+		T acc = first();
+		for (int i = 1; i < size; ++i)
+		{
+			acc = operation(acc, values[i]);
+		}
+		return acc;
 	}
 }
