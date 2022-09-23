@@ -345,3 +345,31 @@ TEST(Array, ReduceArrayWithMultipleElements)
 
 	EXPECT_EQ(arr.reduce(operation), 6);
 }
+
+TEST(Array, FoldEmptyArray)
+{
+	DS::Array<int> arr = DS::Array<int>();
+	auto operation = [](int acc, int& x) { return acc + x; };
+
+	EXPECT_EQ(arr.fold<int>(operation, 0), 0);
+}
+
+TEST(Array, FoldArrayWithOneElement)
+{
+	DS::Array<int> arr = DS::Array<int>();
+	arr.push(1);
+	auto operation = [](int acc, int& x) { return acc + x; };
+
+	EXPECT_EQ(arr.fold<int>(operation, 4), 5);
+}
+
+TEST(Array, FoldArrayWithMultipleElements)
+{
+	DS::Array<int> arr = DS::Array<int>();
+	arr.push(1);
+	arr.push(2);
+	arr.push(3);
+	auto operation = [](int acc, int& x) { return acc + x; };
+
+	EXPECT_EQ(arr.fold<int>(operation, 4), 10);
+}

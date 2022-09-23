@@ -38,6 +38,8 @@ namespace DS
 		template<typename R>
 		Array<R> map(std::function<R(T)> transform);
 		T reduce(std::function<T(T, T&)> operation);
+		template<typename S>
+		S fold(std::function<S(S, T&)> operation, S initialValue);
 
 		Array<T>& operator=(const Array<T>& other);
 		Array<T>& operator=(Array<T>&& other);
@@ -303,9 +305,26 @@ namespace DS
 		{
 			throw UnsupportedOperationException();
 		}
-		
+
 		T acc = first();
 		for (int i = 1; i < size; ++i)
+		{
+			acc = operation(acc, values[i]);
+		}
+		return acc;
+	}
+
+	template<typename T>
+	template<typename S>
+	inline S Array<T>::fold(std::function<S(S, T&)> operation, S initialValue)
+	{
+		if (isEmpty())
+		{
+			return initialValue;
+		}
+
+		S acc = initialValue;
+		for (int i = 0; i < size; ++i)
 		{
 			acc = operation(acc, values[i]);
 		}
