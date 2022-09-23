@@ -198,3 +198,35 @@ TEST(Array, MoveAssignmentOperator)
 	EXPECT_EQ(arr2[0], 1);
 	EXPECT_EQ(arr2[1], 2);
 }
+
+TEST(Array, ArrayPlusOperator)
+{
+	DS::Array<int> arr = DS::Array<int>();
+	arr.push(1);
+	DS::Array<int> arr2 = DS::Array<int>();
+	arr2.push(2);
+	arr2.push(3);
+
+	DS::Array<int> arr3 = arr + arr2;
+
+	EXPECT_EQ(arr3.getSize(), 3);
+	EXPECT_EQ(arr3[0], 1);
+	EXPECT_EQ(arr3[1], 2);
+	EXPECT_EQ(arr3[2], 3);
+}
+
+TEST(Array, ArrayPlusEqualsOperator)
+{
+	DS::Array<int> arr = DS::Array<int>();
+	arr.push(1);
+	DS::Array<int> arr2 = DS::Array<int>();
+	arr2.push(2);
+	arr2.push(3);
+
+	arr2 += arr;
+
+	EXPECT_EQ(arr2.getSize(), 3);
+	EXPECT_EQ(arr2[0], 2);
+	EXPECT_EQ(arr2[1], 3);
+	EXPECT_EQ(arr2[2], 1);
+}

@@ -40,6 +40,9 @@ namespace DS
 		T& operator[](int index);
 		constexpr T& operator[](int index) const;
 
+		Array<T> operator+(const Array<T>& rhs);
+		Array<T>& operator+=(const Array<T>& rhs);
+
 	private:
 		void resize(int newSize);
 	};
@@ -217,6 +220,26 @@ namespace DS
 			throw OutOfRangeException(index);
 		}
 		return values[index];
+	}
+
+	template<typename T>
+	Array<T> Array<T>::operator+(const Array<T>& rhs)
+	{
+		return Array<T>(*this) += rhs;
+	}
+
+	template<typename T>
+	Array<T>& Array<T>::operator+=(const Array<T>& rhs)
+	{
+		int oldSize = size;
+		int newSize = size + rhs.size;
+		resize(newSize);
+
+		for (int i = 0; i < rhs.size; i++)
+		{
+			push(rhs.values[i]);
+		}
+		return *this;
 	}
 
 	template<typename T>
