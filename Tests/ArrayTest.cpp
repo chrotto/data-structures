@@ -373,3 +373,22 @@ TEST(Array, FoldArrayWithMultipleElements)
 
 	EXPECT_EQ(arr.fold<int>(operation, 4), 10);
 }
+
+TEST(Array, FindElementInEmptyArry)
+{
+	DS::Array<int> arr = DS::Array<int>();
+	auto predicate = [](int& x) { return x % 2 == 0; };
+
+	EXPECT_EQ(arr.find(predicate), nullptr);
+}
+
+TEST(Array, FindElementInArry)
+{
+	DS::Array<int> arr = DS::Array<int>();
+	arr.push(1);
+	arr.push(2);
+	arr.push(3);
+	auto predicate = [](int& x) { return x % 2 == 0; };
+
+	EXPECT_EQ(*arr.find(predicate), 2);
+}

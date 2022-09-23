@@ -31,6 +31,8 @@ namespace DS
 		T& last();
 		T* lastOrNull();
 
+		T* find(std::function<bool(T&)> predicate);
+
 		bool contains(T element) const;
 		bool any(std::function<bool(T&)> predicate);
 
@@ -147,6 +149,19 @@ namespace DS
 	T* Array<T>::lastOrNull()
 	{
 		return !isEmpty() ? &last() : nullptr;
+	}
+
+	template<typename T>
+	T* Array<T>::find(std::function<bool(T&)> predicate)
+	{
+		for (int i = 0; i < size; ++i)
+		{
+			if (predicate(values[i]))
+			{
+				return &values[i];
+			}
+		}
+		return nullptr;
 	}
 
 	template<typename T>
@@ -299,7 +314,7 @@ namespace DS
 	}
 
 	template<typename T>
-	inline T Array<T>::reduce(std::function<T(T, T&)> operation)
+	T Array<T>::reduce(std::function<T(T, T&)> operation)
 	{
 		if (isEmpty())
 		{
@@ -316,7 +331,7 @@ namespace DS
 
 	template<typename T>
 	template<typename S>
-	inline S Array<T>::fold(std::function<S(S, T&)> operation, S initialValue)
+	S Array<T>::fold(std::function<S(S, T&)> operation, S initialValue)
 	{
 		if (isEmpty())
 		{
