@@ -374,7 +374,7 @@ TEST(Array, FoldArrayWithMultipleElements)
 	EXPECT_EQ(arr.fold<int>(operation, 4), 10);
 }
 
-TEST(Array, FindElementInEmptyArry)
+TEST(Array, FindElementInEmptyArray)
 {
 	DS::Array<int> arr = DS::Array<int>();
 	auto predicate = [](int& x) { return x % 2 == 0; };
@@ -382,7 +382,7 @@ TEST(Array, FindElementInEmptyArry)
 	EXPECT_EQ(arr.find(predicate), nullptr);
 }
 
-TEST(Array, FindElementInArry)
+TEST(Array, FindElementInArray)
 {
 	DS::Array<int> arr = DS::Array<int>();
 	arr.push(1);
@@ -391,4 +391,37 @@ TEST(Array, FindElementInArry)
 	auto predicate = [](int& x) { return x % 2 == 0; };
 
 	EXPECT_EQ(*arr.find(predicate), 2);
+}
+
+TEST(Array, SortEmptyArray)
+{
+	DS::Array<int> arr = DS::Array<int>();
+	auto comparison = [](int& x, int& y) { return x < y; };
+	DS::Array sortedArr = arr.sort(comparison);
+
+	EXPECT_EQ(sortedArr.getSize(), 0);
+}
+
+TEST(Array, SortArray)
+{
+	DS::Array<int> arr = DS::Array<int>();
+	arr.push(5);
+	arr.push(10);
+	arr.push(1);
+	arr.push(4);
+	arr.push(8);
+	auto comparison = [](int& x, int& y) { return x < y; };
+	DS::Array sortedArr = arr.sort(comparison);
+
+	EXPECT_EQ(arr[0], 5);
+	EXPECT_EQ(arr[1], 10);
+	EXPECT_EQ(arr[2], 1);
+	EXPECT_EQ(arr[3], 4);
+	EXPECT_EQ(arr[4], 8);
+
+	EXPECT_EQ(sortedArr[0], 1);
+	EXPECT_EQ(sortedArr[1], 4);
+	EXPECT_EQ(sortedArr[2], 5);
+	EXPECT_EQ(sortedArr[3], 8);
+	EXPECT_EQ(sortedArr[4], 10);
 }
