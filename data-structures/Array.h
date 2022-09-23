@@ -31,6 +31,7 @@ namespace DS
 		T* lastOrNull();
 
 		bool contains(T element) const;
+		bool any(std::function<bool(T&)> predicate);
 
 		Array<T> filter(std::function<bool(T&)> predicate);
 
@@ -151,6 +152,19 @@ namespace DS
 			{
 				return true;
 			};
+		}
+		return false;
+	}
+
+	template<typename T>
+	bool Array<T>::any(std::function<bool(T&)> predicate)
+	{
+		for (int i = 0; i < size; ++i)
+		{
+			if (predicate(values[i]))
+			{
+				return true;
+			}
 		}
 		return false;
 	}
