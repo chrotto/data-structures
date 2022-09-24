@@ -47,6 +47,9 @@ namespace DS
 		T& operator[](int index);
 		constexpr T& operator[](int index) const;
 
+		Set<T> operator+(const Set<T>& rhs);
+		Set<T>& operator+=(const Set<T>& rhs);
+
 	private:
 		void resize(int newSize);
 	};
@@ -250,6 +253,22 @@ namespace DS
 			throw OutOfRangeException(index);
 		}
 		return values[index];
+	}
+
+	template<typename T>
+	Set<T> Set<T>::operator+(const Set<T>& rhs)
+	{
+		return Set<T>(*this) += rhs;
+	}
+
+	template<typename T>
+	Set<T>& Set<T>::operator+=(const Set<T>& rhs)
+	{
+		for (int i = 0; i < rhs.size; i++)
+		{
+			add(rhs.values[i]);
+		}
+		return *this;
 	}
 
 	template<typename T>

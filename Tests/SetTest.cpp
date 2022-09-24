@@ -350,3 +350,65 @@ TEST(Set, FoldSetWithMultipleElements)
 
 	EXPECT_EQ(Set.fold<int>(operation, 4), 10);
 }
+
+TEST(Set, SetPlusOperator)
+{
+	DS::Set<int> set = DS::Set<int>();
+	set.add(1);
+	DS::Set<int> set2 = DS::Set<int>();
+	set2.add(2);
+	set2.add(3);
+
+	DS::Set<int> set3 = set + set2;
+
+	EXPECT_EQ(set3.getSize(), 3);
+	EXPECT_EQ(set3[0], 1);
+	EXPECT_EQ(set3[1], 2);
+	EXPECT_EQ(set3[2], 3);
+}
+
+TEST(Set, SetPlusOperatorDoNotAddDuplicates)
+{
+	DS::Set<int> set = DS::Set<int>();
+	set.add(1);
+	DS::Set<int> set2 = DS::Set<int>();
+	set2.add(1);
+	set2.add(2);
+
+	DS::Set<int> set3 = set + set2;
+
+	EXPECT_EQ(set3.getSize(), 2);
+	EXPECT_EQ(set3[0], 1);
+	EXPECT_EQ(set3[1], 2);
+}
+
+TEST(Set, SetPlusEqualsOperator)
+{
+	DS::Set<int> set = DS::Set<int>();
+	set.add(1);
+	DS::Set<int> set2 = DS::Set<int>();
+	set2.add(2);
+	set2.add(3);
+
+	set2 += set;
+
+	EXPECT_EQ(set2.getSize(), 3);
+	EXPECT_EQ(set2[0], 2);
+	EXPECT_EQ(set2[1], 3);
+	EXPECT_EQ(set2[2], 1);
+}
+
+TEST(Set, SetPlusEqualsOperatorDoNotAddDuplicates)
+{
+	DS::Set<int> set = DS::Set<int>();
+	set.add(1);
+	DS::Set<int> set2 = DS::Set<int>();
+	set2.add(1);
+	set2.add(2);
+
+	set2 += set;
+
+	EXPECT_EQ(set2.getSize(), 2);
+	EXPECT_EQ(set2[0], 1);
+	EXPECT_EQ(set2[1], 2);
+}
