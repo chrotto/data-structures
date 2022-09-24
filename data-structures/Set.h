@@ -1,5 +1,6 @@
 #pragma once
 #include <functional>
+#include <algorithm>
 #include "Exceptions/NoSuchElementException.h"
 #include "Exceptions/OutOfRangeException.h"
 #include "Exceptions/UnsupportedOperationException.h"
@@ -43,6 +44,8 @@ namespace DS
 		T reduce(std::function<T(T, const T&)> operation);
 		template<typename S>
 		S fold(std::function<S(S, const T&)> operation, S initialValue);
+
+		Set<T> sort(std::function<bool(const T& x, const T& b)> comparison);
 
 		T& operator[](int index);
 		constexpr T& operator[](int index) const;
@@ -232,6 +235,14 @@ namespace DS
 			}
 		}
 		return filteredSet;
+	}
+
+	template<typename T>
+	Set<T> Set<T>::sort(std::function<bool(const T& x, const T& b)> comparison)
+	{
+		Set<T> sortedSet(*this);
+		std::sort(sortedSet.values, sortedSet.values + size, comparison);
+		return sortedSet;
 	}
 
 	template<typename T>

@@ -396,7 +396,7 @@ TEST(Array, FindElementInArray)
 TEST(Array, SortEmptyArray)
 {
 	DS::Array<int> arr = DS::Array<int>();
-	auto comparison = [](int& x, int& y) { return x < y; };
+	auto comparison = [](const int& x, const int& y) { return x < y; };
 	DS::Array sortedArr = arr.sort(comparison);
 
 	EXPECT_EQ(sortedArr.getSize(), 0);
@@ -410,7 +410,7 @@ TEST(Array, SortArray)
 	arr.push(1);
 	arr.push(4);
 	arr.push(8);
-	auto comparison = [](int& x, int& y) { return x < y; };
+	auto comparison = [](const int& x, const int& y) { return x < y; };
 	DS::Array sortedArr = arr.sort(comparison);
 
 	EXPECT_EQ(arr[0], 5);

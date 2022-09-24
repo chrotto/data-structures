@@ -44,7 +44,7 @@ namespace DS
 		template<typename S>
 		S fold(std::function<S(S, const T&)> operation, S initialValue);
 
-		Array<T> sort(std::function<bool(T& x, T& b)> comparison);
+		Array<T> sort(std::function<bool(const T& x, const T& b)> comparison);
 
 		Array<T>& operator=(const Array<T>& other);
 		Array<T>& operator=(Array<T>&& other);
@@ -208,7 +208,7 @@ namespace DS
 	}
 
 	template<typename T>
-	Array<T> Array<T>::sort(std::function<bool(T& x, T& b)> comparison)
+	Array<T> Array<T>::sort(std::function<bool(const T& x, const T& b)> comparison)
 	{
 		Array<T> sortedArray(*this);
 		std::sort(sortedArray.values, sortedArray.values + size, comparison);

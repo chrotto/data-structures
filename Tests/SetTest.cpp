@@ -441,3 +441,36 @@ TEST(Set, MoveAssignmentOperator)
 	EXPECT_EQ(set2[0], 1);
 	EXPECT_EQ(set2[1], 2);
 }
+
+TEST(Set, SortEmptySet)
+{
+	DS::Set<int> set = DS::Set<int>();
+	auto comparison = [](const int& x, const int& y) { return x < y; };
+	DS::Set sortedSet = set.sort(comparison);
+
+	EXPECT_EQ(sortedSet.getSize(), 0);
+}
+
+TEST(Set, SortSet)
+{
+	DS::Set<int> set = DS::Set<int>();
+	set.add(5);
+	set.add(10);
+	set.add(1);
+	set.add(4);
+	set.add(8);
+	auto comparison = [](const int& x, const int& y) { return x < y; };
+	DS::Set sortedSet = set.sort(comparison);
+
+	EXPECT_EQ(set[0], 5);
+	EXPECT_EQ(set[1], 10);
+	EXPECT_EQ(set[2], 1);
+	EXPECT_EQ(set[3], 4);
+	EXPECT_EQ(set[4], 8);
+
+	EXPECT_EQ(sortedSet[0], 1);
+	EXPECT_EQ(sortedSet[1], 4);
+	EXPECT_EQ(sortedSet[2], 5);
+	EXPECT_EQ(sortedSet[3], 8);
+	EXPECT_EQ(sortedSet[4], 10);
+}
