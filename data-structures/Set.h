@@ -20,6 +20,12 @@ namespace DS
 		Set<T>& operator=(Set<T>&& other);
 
 		constexpr int getSize() const;
+		bool contains(T element) const;
+
+		void add(T element);
+
+	private:
+		void resize(int newSize);
 	};
 
 	template<typename T>
@@ -95,5 +101,57 @@ namespace DS
 	constexpr int Set<T>::getSize() const
 	{
 		return size;
+	}
+
+	template<typename T>
+	bool Set<T>::contains(T element) const
+	{
+		for (int i = 0; i < size; i++)
+		{
+			if (values[i] == element)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	template<typename T>
+	void Set<T>::add(T element)
+	{
+		if (contains(element))
+		{
+			return;
+		}
+
+		if (size == maxSize)
+		{
+			resize(maxSize + 1);
+		}
+		values[size++] = element;
+	}
+
+	template<typename T>
+	void Set<T>::resize(int newSize)
+	{
+		if (newSize == maxSize)
+		{
+			return;
+		}
+		maxSize = newSize;
+
+		if (newSize < size)
+		{
+			size = newSize;
+		}
+
+		T* newValues = new T[newSize];
+		for (int i = 0; i < size; i++)
+		{
+			newValues[i] = values[i];
+		}
+
+		delete[] values;
+		values = newValues;
 	}
 }
