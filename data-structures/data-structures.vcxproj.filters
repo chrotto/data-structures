@@ -41,5 +41,8 @@
     <ClInclude Include="Exceptions\UnsupportedOperationException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Set.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
