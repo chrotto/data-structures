@@ -1,4 +1,5 @@
 #pragma once
+#include <functional>
 #include "Exceptions/NoSuchElementException.h"
 #include "Exceptions/OutOfRangeException.h"
 
@@ -24,6 +25,7 @@ namespace DS
 		constexpr int getSize() const;
 		bool isEmpty() const;
 		bool contains(T element) const;
+		bool any(std::function<bool(const T&)> predicate);
 
 		void add(T element);
 
@@ -126,6 +128,19 @@ namespace DS
 		for (int i = 0; i < size; i++)
 		{
 			if (values[i] == element)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	template<typename T>
+	bool Set<T>::any(std::function<bool(const T&)> predicate)
+	{
+		for (int i = 0; i < size; ++i)
+		{
+			if (predicate(values[i]))
 			{
 				return true;
 			}

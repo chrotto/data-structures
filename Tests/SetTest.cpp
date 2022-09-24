@@ -152,3 +152,35 @@ TEST(Set, IndexOperatorAccessOutOfRange)
 	EXPECT_THROW(set[1], DS::OutOfRangeException);
 	EXPECT_THROW(set[-1], DS::OutOfRangeException);
 }
+
+TEST(Set, ContainsOneElementFulfillingThePredicate)
+{
+	DS::Set<int> set = DS::Set<int>();
+	set.add(1);
+	set.add(2);
+	set.add(3);
+	set.add(4);
+
+	auto predicate = [](const int& x) { return x % 2 == 0; };
+	EXPECT_TRUE(set.any(predicate));
+}
+
+TEST(Set, ContainsNoElementFulfillingThePredicate)
+{
+	DS::Set<int> set = DS::Set<int>();
+	set.add(1);
+	set.add(2);
+	set.add(3);
+	set.add(4);
+
+	auto predicate = [](const int& x) { return x == 0; };
+	EXPECT_FALSE(set.any(predicate));
+}
+
+TEST(Set, ContainsOneElementFulfillingThePredicateInEmptySet)
+{
+	DS::Set<int> set = DS::Set<int>();
+
+	auto predicate = [](const int& x) { return x == 0; };
+	EXPECT_FALSE(set.any(predicate));
+}

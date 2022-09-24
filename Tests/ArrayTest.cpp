@@ -240,7 +240,7 @@ TEST(Array, ContainsOneElementFulfillingThePredicate)
 	arr.push(3);
 	arr.push(4);
 
-	auto predicate = [](int& x) { return x % 2 == 0; };
+	auto predicate = [](const int& x) { return x % 2 == 0; };
 	EXPECT_TRUE(arr.any(predicate));
 }
 
@@ -252,7 +252,7 @@ TEST(Array, ContainsNoElementFulfillingThePredicate)
 	arr.push(3);
 	arr.push(4);
 
-	auto predicate = [](int& x) { return x == 0; };
+	auto predicate = [](const int& x) { return x == 0; };
 	EXPECT_FALSE(arr.any(predicate));
 }
 
@@ -260,7 +260,7 @@ TEST(Array, ContainsOneElementFulfillingThePredicateInEmptyArray)
 {
 	DS::Array<int> arr = DS::Array<int>();
 
-	auto predicate = [](int& x) { return x == 0; };
+	auto predicate = [](const int& x) { return x == 0; };
 	EXPECT_FALSE(arr.any(predicate));
 }
 

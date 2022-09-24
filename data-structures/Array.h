@@ -35,7 +35,7 @@ namespace DS
 		T* find(std::function<bool(T&)> predicate);
 
 		bool contains(T element) const;
-		bool any(std::function<bool(T&)> predicate);
+		bool any(std::function<bool(const T&)> predicate);
 
 		Array<T> filter(std::function<bool(T&)> predicate);
 		template<typename R>
@@ -181,7 +181,7 @@ namespace DS
 	}
 
 	template<typename T>
-	bool Array<T>::any(std::function<bool(T&)> predicate)
+	bool Array<T>::any(std::function<bool(const T&)> predicate)
 	{
 		for (int i = 0; i < size; ++i)
 		{
