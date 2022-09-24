@@ -66,3 +66,35 @@ TEST(Set, EmptyCheckOnNonEmptySet)
 
 	EXPECT_FALSE(set.isEmpty());
 }
+
+TEST(Set, FirstElementAccess)
+{
+	DS::Set<int> set = DS::Set<int>();
+	set.add(10);
+	set.add(20);
+
+	EXPECT_EQ(set.first(), 10);
+}
+
+TEST(Set, FirstElementAccessWithNoSuchElementException)
+{
+	DS::Set<int> set = DS::Set<int>();
+
+	EXPECT_THROW(set.first(), DS::NoSuchElementException);
+}
+
+TEST(Set, FirstOrNullElementAccessOfExistingElement)
+{
+	DS::Set<int> set = DS::Set<int>();
+	set.add(10);
+	set.add(20);
+
+	EXPECT_EQ(*set.firstOrNull(), 10);
+}
+
+TEST(Set, FirstOrNullElementAccessOfEmptySet)
+{
+	DS::Set<int> set = DS::Set<int>();
+
+	EXPECT_EQ(set.firstOrNull(), nullptr);
+}

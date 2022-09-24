@@ -1,4 +1,5 @@
 #pragma once
+#include "Exceptions/NoSuchElementException.h"
 
 namespace DS
 {
@@ -24,6 +25,9 @@ namespace DS
 		bool contains(T element) const;
 
 		void add(T element);
+
+		T& first();
+		T* firstOrNull();
 
 	private:
 		void resize(int newSize);
@@ -136,6 +140,22 @@ namespace DS
 			resize(maxSize + 1);
 		}
 		values[size++] = element;
+	}
+
+	template<typename T>
+	T& Set<T>::first()
+	{
+		if (isEmpty())
+		{
+			throw NoSuchElementException("The set is empty.");
+		}
+		return *values;
+	}
+
+	template<typename T>
+	T* Set<T>::firstOrNull()
+	{
+		return !isEmpty() ? &first() : nullptr;
 	}
 
 	template<typename T>
