@@ -20,6 +20,7 @@ namespace DS
 		Set<T>& operator=(Set<T>&& other);
 
 		constexpr int getSize() const;
+		bool isEmpty() const;
 		bool contains(T element) const;
 
 		void add(T element);
@@ -101,6 +102,12 @@ namespace DS
 	constexpr int Set<T>::getSize() const
 	{
 		return size;
+	}
+
+	template<typename T>
+	bool Set<T>::isEmpty() const
+	{
+		return size == 0;
 	}
 
 	template<typename T>

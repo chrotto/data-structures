@@ -51,3 +51,18 @@ TEST(Set, ContainsElementInEmptySet)
 
 	EXPECT_FALSE(set.contains(10));
 }
+
+TEST(Set, EmptyCheckOnEmptySet)
+{
+	DS::Set<int> set = DS::Set<int>();
+
+	EXPECT_TRUE(set.isEmpty());
+}
+
+TEST(Set, EmptyCheckOnNonEmptySet)
+{
+	DS::Set<int> set = DS::Set<int>();
+	set.add(10);
+
+	EXPECT_FALSE(set.isEmpty());
+}
