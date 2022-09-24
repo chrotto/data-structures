@@ -184,3 +184,22 @@ TEST(Set, ContainsOneElementFulfillingThePredicateInEmptySet)
 	auto predicate = [](const int& x) { return x == 0; };
 	EXPECT_FALSE(set.any(predicate));
 }
+
+TEST(Set, FindElementInEmptySet)
+{
+	DS::Set<int> set = DS::Set<int>();
+	auto predicate = [](const int& x) { return x % 2 == 0; };
+
+	EXPECT_EQ(set.find(predicate), nullptr);
+}
+
+TEST(Set, FindElementInSet)
+{
+	DS::Set<int> set = DS::Set<int>();
+	set.add(1);
+	set.add(2);
+	set.add(3);
+	auto predicate = [](const int& x) { return x % 2 == 0; };
+
+	EXPECT_EQ(*set.find(predicate), 2);
+}

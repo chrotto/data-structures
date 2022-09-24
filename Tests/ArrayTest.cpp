@@ -377,7 +377,7 @@ TEST(Array, FoldArrayWithMultipleElements)
 TEST(Array, FindElementInEmptyArray)
 {
 	DS::Array<int> arr = DS::Array<int>();
-	auto predicate = [](int& x) { return x % 2 == 0; };
+	auto predicate = [](const int& x) { return x % 2 == 0; };
 
 	EXPECT_EQ(arr.find(predicate), nullptr);
 }
@@ -388,7 +388,7 @@ TEST(Array, FindElementInArray)
 	arr.push(1);
 	arr.push(2);
 	arr.push(3);
-	auto predicate = [](int& x) { return x % 2 == 0; };
+	auto predicate = [](const int& x) { return x % 2 == 0; };
 
 	EXPECT_EQ(*arr.find(predicate), 2);
 }

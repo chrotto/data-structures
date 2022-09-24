@@ -32,7 +32,7 @@ namespace DS
 		T& last();
 		T* lastOrNull();
 
-		T* find(std::function<bool(T&)> predicate);
+		T* find(std::function<bool(const T&)> predicate);
 
 		bool contains(T element) const;
 		bool any(std::function<bool(const T&)> predicate);
@@ -155,7 +155,7 @@ namespace DS
 	}
 
 	template<typename T>
-	T* Array<T>::find(std::function<bool(T&)> predicate)
+	T* Array<T>::find(std::function<bool(const T&)> predicate)
 	{
 		for (int i = 0; i < size; ++i)
 		{

@@ -34,6 +34,8 @@ namespace DS
 		T& last();
 		T* lastOrNull();
 
+		T* find(std::function<bool(const T&)> predicate);
+
 		T& operator[](int index);
 		constexpr T& operator[](int index) const;
 
@@ -193,6 +195,19 @@ namespace DS
 	T* Set<T>::lastOrNull()
 	{
 		return !isEmpty() ? &last() : nullptr;
+	}
+
+	template<typename T>
+	T* Set<T>::find(std::function<bool(const T&)> predicate)
+	{
+		for (int i = 0; i < size; ++i)
+		{
+			if (predicate(values[i]))
+			{
+				return &values[i];
+			}
+		}
+		return nullptr;
 	}
 
 	template<typename T>
