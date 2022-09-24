@@ -412,3 +412,32 @@ TEST(Set, SetPlusEqualsOperatorDoNotAddDuplicates)
 	EXPECT_EQ(set2[0], 1);
 	EXPECT_EQ(set2[1], 2);
 }
+
+TEST(Set, CopyAssignmentOperator)
+{
+	DS::Set<int> set = DS::Set<int>();
+	set.add(1);
+	set.add(2);
+	DS::Set<int> set2 = DS::Set<int>();
+	set2 = set;
+
+	EXPECT_EQ(set.getSize(), 2);
+	EXPECT_EQ(set[0], 1);
+	EXPECT_EQ(set[1], 2);
+	EXPECT_EQ(set2.getSize(), 2);
+	EXPECT_EQ(set2[0], 1);
+	EXPECT_EQ(set2[1], 2);
+}
+
+TEST(Set, MoveAssignmentOperator)
+{
+	DS::Set<int> set = DS::Set<int>();
+	set.add(1);
+	set.add(2);
+	DS::Set<int> set2 = DS::Set<int>();
+	set2 = std::move(set);
+
+	EXPECT_EQ(set2.getSize(), 2);
+	EXPECT_EQ(set2[0], 1);
+	EXPECT_EQ(set2[1], 2);
+}

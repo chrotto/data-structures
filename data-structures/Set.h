@@ -114,7 +114,6 @@ namespace DS
 		{
 			maxSize = other.maxSize;
 			size = other.size;
-			values = other.values;
 
 			T* tmp = values;
 			values = other.values;
