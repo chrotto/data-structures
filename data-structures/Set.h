@@ -1,5 +1,6 @@
 #pragma once
 #include "Exceptions/NoSuchElementException.h"
+#include "Exceptions/OutOfRangeException.h"
 
 namespace DS
 {
@@ -30,6 +31,9 @@ namespace DS
 		T* firstOrNull();
 		T& last();
 		T* lastOrNull();
+
+		T& operator[](int index);
+		constexpr T& operator[](int index) const;
 
 	private:
 		void resize(int newSize);
@@ -174,6 +178,26 @@ namespace DS
 	T* Set<T>::lastOrNull()
 	{
 		return !isEmpty() ? &last() : nullptr;
+	}
+
+	template<typename T>
+	T& Set<T>::operator[](int index)
+	{
+		if (index < 0 || index >= size)
+		{
+			throw OutOfRangeException(index);
+		}
+		return values[index];
+	}
+
+	template<typename T>
+	constexpr T& Set<T>::operator[](int index) const
+	{
+		if (index < 0 || index >= size)
+		{
+			throw OutOfRangeException(index);
+		}
+		return values[index];
 	}
 
 	template<typename T>

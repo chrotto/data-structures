@@ -131,3 +131,24 @@ TEST(Set, LastOrNullElementAccessOfEmptySet)
 
 	EXPECT_EQ(set.lastOrNull(), nullptr);
 }
+
+TEST(Set, IndexOperatorAccess)
+{
+	DS::Set<int> set = DS::Set<int>();
+	set.add(10);
+	set.add(20);
+	set.add(30);
+
+	EXPECT_EQ(set[0], 10);
+	EXPECT_EQ(set[1], 20);
+	EXPECT_EQ(set[2], 30);
+}
+
+TEST(Set, IndexOperatorAccessOutOfRange)
+{
+	DS::Set<int> set = DS::Set<int>();
+	set.add(10);
+
+	EXPECT_THROW(set[1], DS::OutOfRangeException);
+	EXPECT_THROW(set[-1], DS::OutOfRangeException);
+}
