@@ -98,3 +98,36 @@ TEST(Set, FirstOrNullElementAccessOfEmptySet)
 
 	EXPECT_EQ(set.firstOrNull(), nullptr);
 }
+
+TEST(Set, LastElementAccess)
+{
+	DS::Set<int> set = DS::Set<int>();
+	set.add(10);
+	set.add(20);
+
+	EXPECT_EQ(set.last(), 20);
+}
+
+TEST(Set, LastElementAccessWithNoSuchElementException)
+{
+	DS::Set<int> set = DS::Set<int>();
+
+	EXPECT_THROW(set.last(), DS::NoSuchElementException);
+}
+
+TEST(Set, LastOrNullElementAccessOfExistingElement)
+{
+	DS::Set<int> set = DS::Set<int>();
+	set.add(10);
+	set.add(20);
+	set.add(10);
+
+	EXPECT_EQ(*set.lastOrNull(), 20);
+}
+
+TEST(Set, LastOrNullElementAccessOfEmptySet)
+{
+	DS::Set<int> set = DS::Set<int>();
+
+	EXPECT_EQ(set.lastOrNull(), nullptr);
+}

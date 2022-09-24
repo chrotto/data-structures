@@ -28,6 +28,8 @@ namespace DS
 
 		T& first();
 		T* firstOrNull();
+		T& last();
+		T* lastOrNull();
 
 	private:
 		void resize(int newSize);
@@ -156,6 +158,22 @@ namespace DS
 	T* Set<T>::firstOrNull()
 	{
 		return !isEmpty() ? &first() : nullptr;
+	}
+
+	template<typename T>
+	T& Set<T>::last()
+	{
+		if (isEmpty())
+		{
+			throw NoSuchElementException("The set is empty.");
+		}
+		return values[size - 1];
+	}
+
+	template<typename T>
+	T* Set<T>::lastOrNull()
+	{
+		return !isEmpty() ? &last() : nullptr;
 	}
 
 	template<typename T>
