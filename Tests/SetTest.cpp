@@ -294,3 +294,59 @@ TEST(Set, MapOfEmptySet)
 
 	EXPECT_TRUE(mappedSet.isEmpty());
 }
+
+TEST(Set, ReduceEmptySet)
+{
+	DS::Set<int> Set = DS::Set<int>();
+	auto operation = [](int acc, const int& x) { return acc + x; };
+
+	EXPECT_THROW(Set.reduce(operation), DS::UnsupportedOperationException);
+}
+
+TEST(Set, ReduceSetWithOneElement)
+{
+	DS::Set<int> Set = DS::Set<int>();
+	Set.add(1);
+	auto operation = [](int acc, const int& x) { return acc + x; };
+
+	EXPECT_EQ(Set.reduce(operation), 1);
+}
+
+TEST(Set, ReduceSetWithMultipleElements)
+{
+	DS::Set<int> Set = DS::Set<int>();
+	Set.add(1);
+	Set.add(2);
+	Set.add(3);
+	auto operation = [](int acc, const int& x) { return acc + x; };
+
+	EXPECT_EQ(Set.reduce(operation), 6);
+}
+
+TEST(Set, FoldEmptySet)
+{
+	DS::Set<int> Set = DS::Set<int>();
+	auto operation = [](int acc, const int& x) { return acc + x; };
+
+	EXPECT_EQ(Set.fold<int>(operation, 0), 0);
+}
+
+TEST(Set, FoldSetWithOneElement)
+{
+	DS::Set<int> Set = DS::Set<int>();
+	Set.add(1);
+	auto operation = [](int acc, const int& x) { return acc + x; };
+
+	EXPECT_EQ(Set.fold<int>(operation, 4), 5);
+}
+
+TEST(Set, FoldSetWithMultipleElements)
+{
+	DS::Set<int> Set = DS::Set<int>();
+	Set.add(1);
+	Set.add(2);
+	Set.add(3);
+	auto operation = [](int acc, const int& x) { return acc + x; };
+
+	EXPECT_EQ(Set.fold<int>(operation, 4), 10);
+}

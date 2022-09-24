@@ -40,9 +40,9 @@ namespace DS
 		Array<T> filter(std::function<bool(const T&)> predicate);
 		template<typename R>
 		Array<R> map(std::function<R(T)> transform);
-		T reduce(std::function<T(T, T&)> operation);
+		T reduce(std::function<T(T, const T&)> operation);
 		template<typename S>
-		S fold(std::function<S(S, T&)> operation, S initialValue);
+		S fold(std::function<S(S, const T&)> operation, S initialValue);
 
 		Array<T> sort(std::function<bool(T& x, T& b)> comparison);
 
@@ -325,7 +325,7 @@ namespace DS
 	}
 
 	template<typename T>
-	T Array<T>::reduce(std::function<T(T, T&)> operation)
+	T Array<T>::reduce(std::function<T(T, const T&)> operation)
 	{
 		if (isEmpty())
 		{
@@ -342,7 +342,7 @@ namespace DS
 
 	template<typename T>
 	template<typename S>
-	S Array<T>::fold(std::function<S(S, T&)> operation, S initialValue)
+	S Array<T>::fold(std::function<S(S, const T&)> operation, S initialValue)
 	{
 		if (isEmpty())
 		{

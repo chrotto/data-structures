@@ -2,6 +2,7 @@
 #include <functional>
 #include "Exceptions/NoSuchElementException.h"
 #include "Exceptions/OutOfRangeException.h"
+#include "Exceptions/UnsupportedOperationException.h"
 
 namespace DS
 {
@@ -39,6 +40,9 @@ namespace DS
 		Set<T> filter(std::function<bool(const T&)> predicate);
 		template<typename R>
 		Set<R> map(std::function<R(T)> transform);
+		T reduce(std::function<T(T, const T&)> operation);
+		template<typename S>
+		S fold(std::function<S(S, const T&)> operation, S initialValue);
 
 		T& operator[](int index);
 		constexpr T& operator[](int index) const;
@@ -282,5 +286,38 @@ namespace DS
 			mappedSet.add(transform(values[i]));
 		}
 		return mappedSet;
+	}
+
+	template<typename T>
+	T Set<T>::reduce(std::function<T(T, const T&)> operation)
+	{
+		if (isEmpty())
+		{
+			throw UnsupportedOperationException();
+		}
+
+		T acc = first();
+		for (int i = 1; i < size; ++i)
+		{
+			acc = operation(acc, values[i]);
+		}
+		return acc;
+	}
+
+	template<typename T>
+	template<typename S>
+	S Set<T>::fold(std::function<S(S, const T&)> operation, S initialValue)
+	{
+		if (isEmpty())
+		{
+			return initialValue;
+		}
+
+		S acc = initialValue;
+		for (int i = 0; i < size; ++i)
+		{
+			acc = operation(acc, values[i]);
+		}
+		return acc;
 	}
 }

@@ -321,7 +321,7 @@ TEST(Array, MapOfEmptyArray)
 TEST(Array, ReduceEmptyArray)
 {
 	DS::Array<int> arr = DS::Array<int>();
-	auto operation = [](int acc, int& x) { return acc + x; };
+	auto operation = [](int acc, const int& x) { return acc + x; };
 
 	EXPECT_THROW(arr.reduce(operation), DS::UnsupportedOperationException);
 }
@@ -330,7 +330,7 @@ TEST(Array, ReduceArrayWithOneElement)
 {
 	DS::Array<int> arr = DS::Array<int>();
 	arr.push(1);
-	auto operation = [](int acc, int& x) { return acc + x; };
+	auto operation = [](int acc, const int& x) { return acc + x; };
 
 	EXPECT_EQ(arr.reduce(operation), 1);
 }
@@ -341,7 +341,7 @@ TEST(Array, ReduceArrayWithMultipleElements)
 	arr.push(1);
 	arr.push(2);
 	arr.push(3);
-	auto operation = [](int acc, int& x) { return acc + x; };
+	auto operation = [](int acc, const int& x) { return acc + x; };
 
 	EXPECT_EQ(arr.reduce(operation), 6);
 }
@@ -349,7 +349,7 @@ TEST(Array, ReduceArrayWithMultipleElements)
 TEST(Array, FoldEmptyArray)
 {
 	DS::Array<int> arr = DS::Array<int>();
-	auto operation = [](int acc, int& x) { return acc + x; };
+	auto operation = [](int acc, const int& x) { return acc + x; };
 
 	EXPECT_EQ(arr.fold<int>(operation, 0), 0);
 }
@@ -358,7 +358,7 @@ TEST(Array, FoldArrayWithOneElement)
 {
 	DS::Array<int> arr = DS::Array<int>();
 	arr.push(1);
-	auto operation = [](int acc, int& x) { return acc + x; };
+	auto operation = [](int acc, const int& x) { return acc + x; };
 
 	EXPECT_EQ(arr.fold<int>(operation, 4), 5);
 }
@@ -369,7 +369,7 @@ TEST(Array, FoldArrayWithMultipleElements)
 	arr.push(1);
 	arr.push(2);
 	arr.push(3);
-	auto operation = [](int acc, int& x) { return acc + x; };
+	auto operation = [](int acc, const int& x) { return acc + x; };
 
 	EXPECT_EQ(arr.fold<int>(operation, 4), 10);
 }
