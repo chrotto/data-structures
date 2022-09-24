@@ -36,6 +36,8 @@ namespace DS
 
 		T* find(std::function<bool(const T&)> predicate);
 
+		Set<T> filter(std::function<bool(const T&)> predicate);
+
 		T& operator[](int index);
 		constexpr T& operator[](int index) const;
 
@@ -208,6 +210,20 @@ namespace DS
 			}
 		}
 		return nullptr;
+	}
+
+	template<typename T>
+	Set<T> Set<T>::filter(std::function<bool(const T&)> predicate)
+	{
+		Set<T> filteredSet = Set<T>();
+		for (int i = 0; i < size; ++i)
+		{
+			if (predicate(values[i]))
+			{
+				filteredSet.add(values[i]);
+			}
+		}
+		return filteredSet;
 	}
 
 	template<typename T>

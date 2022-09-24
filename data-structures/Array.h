@@ -37,7 +37,7 @@ namespace DS
 		bool contains(T element) const;
 		bool any(std::function<bool(const T&)> predicate);
 
-		Array<T> filter(std::function<bool(T&)> predicate);
+		Array<T> filter(std::function<bool(const T&)> predicate);
 		template<typename R>
 		Array<R> map(std::function<R(T)> transform);
 		T reduce(std::function<T(T, T&)> operation);
@@ -194,7 +194,7 @@ namespace DS
 	}
 
 	template<typename T>
-	Array<T> Array<T>::filter(std::function<bool(T&)> predicate)
+	Array<T> Array<T>::filter(std::function<bool(const T&)> predicate)
 	{
 		Array<T> filteredArray = Array<T>();
 		for (int i = 0; i < size; ++i)

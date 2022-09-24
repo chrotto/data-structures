@@ -156,7 +156,7 @@ TEST(Array, FilterArrayByEvenNumbers)
 	arr.push(6);
 	arr.push(6);
 
-	DS::Array<int> filteredArray = arr.filter([](int& x) { return x % 2 == 0; });
+	DS::Array<int> filteredArray = arr.filter([](const int& x) { return x % 2 == 0; });
 	EXPECT_EQ(filteredArray.getSize(), 3);
 	EXPECT_EQ(filteredArray[0], 2);
 	EXPECT_EQ(filteredArray[1], 6);
@@ -167,7 +167,7 @@ TEST(Array, FilterArrayEmptyArray)
 {
 	DS::Array<int> arr = DS::Array<int>();
 
-	DS::Array<int> filteredArray = arr.filter([](int& x) { return x % 2 == 0; });
+	DS::Array<int> filteredArray = arr.filter([](const int& x) { return x % 2 == 0; });
 	EXPECT_EQ(filteredArray.getSize(), 0);
 }
 

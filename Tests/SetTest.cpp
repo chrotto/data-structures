@@ -203,3 +203,25 @@ TEST(Set, FindElementInSet)
 
 	EXPECT_EQ(*set.find(predicate), 2);
 }
+
+TEST(Set, FilterSetByEvenNumbers)
+{
+	DS::Set<int> set = DS::Set<int>();
+	set.add(1);
+	set.add(2);
+	set.add(5);
+	set.add(6);
+
+	DS::Set<int> filteredSet = set.filter([](const int& x) { return x % 2 == 0; });
+	EXPECT_EQ(filteredSet.getSize(), 2);
+	EXPECT_EQ(filteredSet[0], 2);
+	EXPECT_EQ(filteredSet[1], 6);
+}
+
+TEST(Set, FilterSetEmptySet)
+{
+	DS::Set<int> set = DS::Set<int>();
+
+	DS::Set<int> filteredSet = set.filter([](const int& x) { return x % 2 == 0; });
+	EXPECT_EQ(filteredSet.getSize(), 0);
+}
