@@ -37,6 +37,8 @@ namespace DS
 		T* find(std::function<bool(const T&)> predicate);
 
 		Set<T> filter(std::function<bool(const T&)> predicate);
+		template<typename R>
+		Set<R> map(std::function<R(T)> transform);
 
 		T& operator[](int index);
 		constexpr T& operator[](int index) const;
@@ -268,5 +270,17 @@ namespace DS
 
 		delete[] values;
 		values = newValues;
+	}
+	
+	template<typename T>
+	template<typename R>
+	Set<R> Set<T>::map(std::function<R(T)> transform)
+	{
+		Set<R> mappedSet = Set<R>();
+		for (int i = 0; i < size; ++i)
+		{
+			mappedSet.add(transform(values[i]));
+		}
+		return mappedSet;
 	}
 }

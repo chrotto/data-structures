@@ -225,3 +225,72 @@ TEST(Set, FilterSetEmptySet)
 	DS::Set<int> filteredSet = set.filter([](const int& x) { return x % 2 == 0; });
 	EXPECT_EQ(filteredSet.getSize(), 0);
 }
+
+TEST(Set, MapSetOfEvenNumbersToOddNumbers)
+{
+	DS::Set<int> set = DS::Set<int>();
+	set.add(2);
+	set.add(4);
+	set.add(6);
+	set.add(8);
+
+	auto transform = [](int x) {return x + 1; };
+	DS::Set<int> mappedSet = set.map<int>(transform);
+
+	EXPECT_EQ(set[0], 2);
+	EXPECT_EQ(set[1], 4);
+	EXPECT_EQ(set[2], 6);
+	EXPECT_EQ(set[3], 8);
+
+	EXPECT_EQ(mappedSet[0], 3);
+	EXPECT_EQ(mappedSet[1], 5);
+	EXPECT_EQ(mappedSet[2], 7);
+	EXPECT_EQ(mappedSet[3], 9);
+}
+
+TEST(Set, MapAllElementsInSetToSameValue)
+{
+	DS::Set<int> set = DS::Set<int>();
+	set.add(2);
+	set.add(4);
+	set.add(6);
+	set.add(8);
+
+	auto transform = [](int x) {return 1; };
+	DS::Set<int> mappedSet = set.map<int>(transform);
+
+	EXPECT_EQ(mappedSet.getSize(), 1);
+	EXPECT_EQ(mappedSet[0], 1);
+}
+
+TEST(Set, MapSetOfIntsToStrings)
+{
+	DS::Set<int> set = DS::Set<int>();
+	set.add(2);
+	set.add(4);
+	set.add(6);
+	set.add(8);
+
+	auto transform = [](int x) {return std::to_string(x); };
+	DS::Set<std::string> mappedSet = set.map<std::string>(transform);
+
+	EXPECT_EQ(set[0], 2);
+	EXPECT_EQ(set[1], 4);
+	EXPECT_EQ(set[2], 6);
+	EXPECT_EQ(set[3], 8);
+
+	EXPECT_EQ(mappedSet[0], "2");
+	EXPECT_EQ(mappedSet[1], "4");
+	EXPECT_EQ(mappedSet[2], "6");
+	EXPECT_EQ(mappedSet[3], "8");
+}
+
+TEST(Set, MapOfEmptySet)
+{
+	DS::Set<int> set = DS::Set<int>();
+
+	auto transform = [](int x) {return x + 1; };
+	DS::Set<int> mappedSet = set.map<int>(transform);
+
+	EXPECT_TRUE(mappedSet.isEmpty());
+}
