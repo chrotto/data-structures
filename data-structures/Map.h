@@ -203,7 +203,7 @@ namespace DS
 			maxSize = other.maxSize;
 			size = other.size;
 			delete[] entries;
-			entries = new MapEntry[maxSize];
+			entries = new MapEntry<K, V>[maxSize];
 
 			for (int i = 0; i < size; ++i)
 			{

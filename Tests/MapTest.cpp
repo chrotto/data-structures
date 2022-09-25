@@ -232,3 +232,33 @@ TEST(Map, MapValuesOfEmptyMap)
 
 	EXPECT_EQ(mappedMap.getSize(), 0);
 }
+
+TEST(Map, CopyAssignmentOperator)
+{
+	DS::Map<std::string, int> map = DS::Map<std::string, int>();
+	map.put("a", 1);
+	map.put("b", 2);
+	DS::Map<std::string, int> map2 = DS::Map<std::string, int>();
+	map2 = map;
+
+	EXPECT_EQ(map.getSize(), 2);
+	EXPECT_EQ(*map["a"], 1);
+	EXPECT_EQ(*map["b"], 2);
+	EXPECT_EQ(map2.getSize(), 2);
+	EXPECT_EQ(*map2["a"], 1);
+	EXPECT_EQ(*map2["b"], 2);
+}
+
+TEST(Map, MoveAssignmentOperator)
+{
+	DS::Map<std::string, int> map = DS::Map<std::string, int>();
+	map.put("a", 1);
+	map.put("b", 2);
+	DS::Map<std::string, int> map2 = DS::Map<std::string, int>();
+	map2 = std::move(map);
+
+	EXPECT_EQ(map2.getSize(), 2);
+	EXPECT_EQ(*map2["a"], 1);
+	EXPECT_EQ(*map2["b"], 2);
+}
+
