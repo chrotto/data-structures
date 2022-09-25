@@ -49,3 +49,18 @@ TEST(Map, EmptyCheckOnNonEmptyMap)
 
 	EXPECT_FALSE(map.isEmpty());
 }
+
+TEST(Map, ContainsKey)
+{
+	DS::Map<std::string, int> map = DS::Map<std::string, int>();
+
+	EXPECT_FALSE(map.containsKey("a"));
+}
+
+TEST(Map, ContainsKeyInEmptyMap)
+{
+	DS::Map<std::string, int> map = DS::Map<std::string, int>();
+	map.put("a", 1);
+
+	EXPECT_TRUE(map.containsKey("a"));
+}

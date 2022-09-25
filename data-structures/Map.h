@@ -39,6 +39,8 @@ namespace DS
 
 		void put(K key, V value);
 
+		bool containsKey(K key) const;
+
 		Map<K, V>& operator=(const Map<K, V>& other);
 		Map<K, V>& operator=(Map<K, V>&& other);
 
@@ -146,6 +148,19 @@ namespace DS
 			resize(maxSize + 1);
 		}
 		entries[size++] = MapEntry(key, value);
+	}
+
+	template<typename K, typename V>
+	bool Map<K, V>::containsKey(K key) const
+	{
+		for (int i = 0; i < size; ++i)
+		{
+			if (entries[i].getKey() == key)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	template<typename K, typename V>
