@@ -204,3 +204,31 @@ TEST(Map, MapKeysOfEmptyMap)
 
 	EXPECT_EQ(mappedMap.getSize(), 0);
 }
+
+TEST(Map, MapValues)
+{
+	DS::Map<std::string, int> map = DS::Map<std::string, int>();
+	map.put("a", 1);
+	map.put("b", 2);
+	map.put("c", 3);
+	map.put("d", 4);
+
+	auto transform = [](const DS::MapEntry<std::string, int>& entry) { return std::to_string(entry.value); };
+	DS::Map<std::string, std::string> mappedMap = map.mapValues<std::string>(transform);
+
+	EXPECT_EQ(mappedMap.getSize(), 4);
+	EXPECT_EQ(*mappedMap["a"], "1");
+	EXPECT_EQ(*mappedMap["b"], "2");
+	EXPECT_EQ(*mappedMap["c"], "3");
+	EXPECT_EQ(*mappedMap["d"], "4");
+}
+
+TEST(Map, MapValuesOfEmptyMap)
+{
+	DS::Map<std::string, int> map = DS::Map<std::string, int>();
+
+	auto transform = [](const DS::MapEntry<std::string, int>& entry) { return std::to_string(entry.value); };
+	DS::Map<std::string, std::string> mappedMap = map.mapValues<std::string>(transform);
+
+	EXPECT_EQ(mappedMap.getSize(), 0);
+}

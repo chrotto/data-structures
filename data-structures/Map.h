@@ -40,6 +40,8 @@ namespace DS
 		Map<K, V> filter(std::function<bool(const MapEntry<K, V>&)> predicate);
 		template<typename R>
 		Map<R, V> mapKeys(std::function<R(const MapEntry<K, V>&)> transform);
+		template<typename R>
+		Map<K, R> mapValues(std::function<R(const MapEntry<K, V>&)> transform);
 
 		Map<K, V>& operator=(const Map<K, V>& other);
 		Map<K, V>& operator=(Map<K, V>&& other);
@@ -177,6 +179,18 @@ namespace DS
 		for (int i = 0; i < size; ++i)
 		{
 			mappedMap.put(transform(entries[i]), entries[i].value);
+		}
+		return mappedMap;
+	}
+
+	template<typename K, typename V>
+	template<typename R>
+	Map<K, R> Map<K, V>::mapValues(std::function<R(const MapEntry<K, V>&)> transform)
+	{
+		Map<K, R> mappedMap = Map<K, R>();
+		for (int i = 0; i < size; ++i)
+		{
+			mappedMap.put(entries[i].key, transform(entries[i]));
 		}
 		return mappedMap;
 	}
