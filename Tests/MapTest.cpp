@@ -84,3 +84,33 @@ TEST(Map, IndexOperatorAccessForNotExistingKey)
 
 	EXPECT_EQ(map["b"], nullptr);
 }
+
+TEST(Map, ContainsOneElementFulfillingThePredicate)
+{
+	DS::Map<std::string, int> map = DS::Map<std::string, int>();
+	map.put("a", 1);
+	map.put("b", 2);
+	map.put("c", 3);
+
+	auto predicate = [](const DS::MapEntry<std::string, int>& entry) { return entry.value % 2 == 0; };
+	EXPECT_TRUE(map.any(predicate));
+}
+
+TEST(Map, ContainsNoElementFulfillingThePredicate)
+{
+	DS::Map<std::string, int> map = DS::Map<std::string, int>();
+	map.put("a", 1);
+	map.put("b", 2);
+	map.put("c", 3);
+
+	auto predicate = [](const DS::MapEntry<std::string, int>& entry) { return entry.value == 0; };
+	EXPECT_FALSE(map.any(predicate));
+}
+
+TEST(Map, ContainsNoElementFulfillingThePredicateInEmptyMap)
+{
+	DS::Map<std::string, int> map = DS::Map<std::string, int>();
+
+	auto predicate = [](const DS::MapEntry<std::string, int>& entry) { return entry.value == 0; };
+	EXPECT_FALSE(map.any(predicate));
+}

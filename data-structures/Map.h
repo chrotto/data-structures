@@ -1,22 +1,17 @@
 #pragma once
+#include <functional>
 
 namespace DS
 {
 	template<typename K, typename V>
 	class MapEntry
 	{
-	private:
+	public:
 		K key;
 		V value;
 
-	public:
 		MapEntry();
 		MapEntry(K inKey, V inValue);
-
-		const K& getKey() const;
-		void setKey(K inKey);
-		V& getValue();
-		void setValue(V inValue);
 	};
 
 
@@ -40,12 +35,13 @@ namespace DS
 		void put(K key, V value);
 
 		bool containsKey(K key) const;
+		bool any(std::function<bool(const MapEntry<K, V>&)> predicate);
 
 		Map<K, V>& operator=(const Map<K, V>& other);
 		Map<K, V>& operator=(Map<K, V>&& other);
 
-		V* const operator[](std::string key);
-		constexpr V* const operator[](std::string key) const;
+		V* operator[](std::string key);
+		constexpr V* operator[](std::string key) const;
 
 	private:
 		void resize(int newSize);
@@ -63,30 +59,6 @@ namespace DS
 	MapEntry<K, V>::MapEntry(K inKey, V inValue) : key(inKey), value(inValue)
 	{
 		// Nothing to do
-	}
-
-	template<typename K, typename V>
-	const K& MapEntry<K, V>::getKey() const
-	{
-		return key;
-	}
-
-	template<typename K, typename V>
-	void MapEntry<K, V>::setKey(K inKey)
-	{
-		key = inKey;
-	}
-
-	template<typename K, typename V>
-	V& MapEntry<K, V>::getValue()
-	{
-		return value;
-	}
-
-	template<typename K, typename V>
-	void MapEntry<K, V>::setValue(V inValue)
-	{
-		value = inValue;
 	}
 
 	template<typename K, typename V>
@@ -142,7 +114,7 @@ namespace DS
 		int indexOfKey = indexOf(key);
 		if (indexOfKey != -1)
 		{
-			entries[indexOfKey].setValue(value);
+			entries[indexOfKey].value = value;
 			return;
 		}
 
@@ -158,7 +130,20 @@ namespace DS
 	{
 		for (int i = 0; i < size; ++i)
 		{
-			if (entries[i].getKey() == key)
+			if (entries[i].key == key)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	template<typename K, typename V>
+	bool Map<K, V>::any(std::function<bool(const MapEntry<K, V>&)> predicate)
+	{
+		for (int i = 0; i < size; ++i)
+		{
+			if (predicate(entries[i]))
 			{
 				return true;
 			}
@@ -200,17 +185,17 @@ namespace DS
 	}
 
 	template<typename K, typename V>
-	V* const Map<K, V>::operator[](std::string key)
+	V* Map<K, V>::operator[](std::string key)
 	{
 		int indexOfKey = indexOf(key);
-		return indexOfKey == -1 ? nullptr : &entries[indexOfKey].getValue();
+		return indexOfKey == -1 ? nullptr : &entries[indexOfKey].value;
 	}
 
 	template<typename K, typename V>
-	constexpr V* const Map<K, V>::operator[](std::string key) const
+	constexpr V* Map<K, V>::operator[](std::string key) const
 	{
 		int indexOfKey = indexOf(key);
-		return indexOfKey == -1 ? nullptr : &entries[indexOfKey].getValue();
+		return indexOfKey == -1 ? nullptr : &entries[indexOfKey].value;
 	}
 
 	template<typename K, typename V>
@@ -242,7 +227,7 @@ namespace DS
 	{
 		for (int i = 0; i < size; ++i)
 		{
-			if (entries[i].getKey() == key)
+			if (entries[i].key == key)
 			{
 				return i;
 			}

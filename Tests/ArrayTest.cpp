@@ -256,7 +256,7 @@ TEST(Array, ContainsNoElementFulfillingThePredicate)
 	EXPECT_FALSE(arr.any(predicate));
 }
 
-TEST(Array, ContainsOneElementFulfillingThePredicateInEmptyArray)
+TEST(Array, ContainsNoElementFulfillingThePredicateInEmptyArray)
 {
 	DS::Array<int> arr = DS::Array<int>();
 
