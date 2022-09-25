@@ -160,3 +160,47 @@ TEST(Map, FilterMapEmptyMap)
 	DS::Map<std::string, int> filteredMap = map.filter([](const DS::MapEntry<std::string, int>& entry) { return entry.value % 2 == 0; });
 	EXPECT_EQ(filteredMap.getSize(), 0);
 }
+
+TEST(Map, MapKeys)
+{
+	DS::Map<std::string, int> map = DS::Map<std::string, int>();
+	map.put("a", 1);
+	map.put("b", 2);
+	map.put("c", 3);
+	map.put("d", 4);
+
+	auto transform = [](const DS::MapEntry<std::string, int>& entry) { return entry.value + 1; };
+	DS::Map<int, int> mappedMap = map.mapKeys<int>(transform);
+
+	EXPECT_EQ(mappedMap.getSize(), 4);
+	EXPECT_EQ(*mappedMap[2], 1);
+	EXPECT_EQ(*mappedMap[3], 2);
+	EXPECT_EQ(*mappedMap[4], 3);
+	EXPECT_EQ(*mappedMap[5], 4);
+}
+
+TEST(Map, MapKeysShouldNotAddDuplicateKeys)
+{
+	DS::Map<std::string, int> map = DS::Map<std::string, int>();
+	map.put("a", 1);
+	map.put("b", 2);
+	map.put("c", 3);
+	map.put("d", 4);
+
+	auto transform = [](const DS::MapEntry<std::string, int>& entry) { return entry.key == "a" ? "b" : "c"; };
+	DS::Map<std::string, int> mappedMap = map.mapKeys<std::string>(transform);
+
+	EXPECT_EQ(mappedMap.getSize(), 2);
+	EXPECT_EQ(*mappedMap["b"], 1);
+	EXPECT_EQ(*mappedMap["c"], 4);
+}
+
+TEST(Map, MapKeysOfEmptyMap)
+{
+	DS::Map<std::string, int> map = DS::Map<std::string, int>();
+
+	auto transform = [](const DS::MapEntry<std::string, int>& entry) { return entry.value + 1; };
+	DS::Map<int, int> mappedMap = map.mapKeys<int>(transform);
+
+	EXPECT_EQ(mappedMap.getSize(), 0);
+}

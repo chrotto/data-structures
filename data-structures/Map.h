@@ -38,12 +38,14 @@ namespace DS
 		bool any(std::function<bool(const MapEntry<K, V>&)> predicate);
 
 		Map<K, V> filter(std::function<bool(const MapEntry<K, V>&)> predicate);
+		template<typename R>
+		Map<R, V> mapKeys(std::function<R(const MapEntry<K, V>&)> transform);
 
 		Map<K, V>& operator=(const Map<K, V>& other);
 		Map<K, V>& operator=(Map<K, V>&& other);
 
-		V* operator[](std::string key);
-		constexpr V* operator[](std::string key) const;
+		V* operator[](K key);
+		constexpr V* operator[](K key) const;
 
 	private:
 		void resize(int newSize);
@@ -168,6 +170,18 @@ namespace DS
 	}
 
 	template<typename K, typename V>
+	template<typename R>
+	Map<R, V> Map<K, V>::mapKeys(std::function<R(const MapEntry<K, V>&)> transform)
+	{
+		Map<R, V> mappedMap = Map<R, V>();
+		for (int i = 0; i < size; ++i)
+		{
+			mappedMap.put(transform(entries[i]), entries[i].value);
+		}
+		return mappedMap;
+	}
+
+	template<typename K, typename V>
 	Map<K, V>& Map<K, V>::operator=(const Map<K, V>& other)
 	{
 		if (this != &other)
@@ -201,14 +215,14 @@ namespace DS
 	}
 
 	template<typename K, typename V>
-	V* Map<K, V>::operator[](std::string key)
+	V* Map<K, V>::operator[](K key)
 	{
 		int indexOfKey = indexOf(key);
 		return indexOfKey == -1 ? nullptr : &entries[indexOfKey].value;
 	}
 
 	template<typename K, typename V>
-	constexpr V* Map<K, V>::operator[](std::string key) const
+	constexpr V* Map<K, V>::operator[](K key) const
 	{
 		int indexOfKey = indexOf(key);
 		return indexOfKey == -1 ? nullptr : &entries[indexOfKey].value;
