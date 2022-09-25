@@ -114,3 +114,49 @@ TEST(Map, ContainsNoElementFulfillingThePredicateInEmptyMap)
 	auto predicate = [](const DS::MapEntry<std::string, int>& entry) { return entry.value == 0; };
 	EXPECT_FALSE(map.any(predicate));
 }
+
+TEST(Map, FilterMapByEvenNumbers)
+{
+	DS::Map<std::string, int> map = DS::Map<std::string, int>();
+	map.put("a", 1);
+	map.put("b", 2);
+	map.put("c", 3);
+	map.put("d", 4);
+
+	DS::Map<std::string, int> filteredMap = map.filter([](const DS::MapEntry<std::string, int>& entry) 
+		{ 
+			return entry.value % 2 == 0;
+		});
+	EXPECT_EQ(map.getSize(), 4);
+	EXPECT_EQ(*map["a"], 1);
+	EXPECT_EQ(*map["b"], 2);
+	EXPECT_EQ(*map["c"], 3);
+	EXPECT_EQ(*map["d"], 4);
+	
+	EXPECT_EQ(filteredMap.getSize(), 2);
+	EXPECT_EQ(*filteredMap["b"], 2);
+	EXPECT_EQ(*filteredMap["d"], 4);
+}
+
+TEST(Map, FilterMapByKeys)
+{
+	DS::Map<std::string, int> map = DS::Map<std::string, int>();
+	map.put("a", 1);
+	map.put("b", 2);
+	map.put("c", 3);
+	map.put("d", 4);
+
+	DS::Map<std::string, int> filteredMap = map.filter([](const DS::MapEntry<std::string, int>& entry) { return entry.key == "a" || entry.key == "d"; });
+
+	EXPECT_EQ(filteredMap.getSize(), 2);
+	EXPECT_EQ(*filteredMap["a"], 1);
+	EXPECT_EQ(*filteredMap["d"], 4);
+}
+
+TEST(Map, FilterMapEmptyMap)
+{
+	DS::Map<std::string, int> map = DS::Map<std::string, int>();
+
+	DS::Map<std::string, int> filteredMap = map.filter([](const DS::MapEntry<std::string, int>& entry) { return entry.value % 2 == 0; });
+	EXPECT_EQ(filteredMap.getSize(), 0);
+}

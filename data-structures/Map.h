@@ -37,6 +37,8 @@ namespace DS
 		bool containsKey(K key) const;
 		bool any(std::function<bool(const MapEntry<K, V>&)> predicate);
 
+		Map<K, V> filter(std::function<bool(const MapEntry<K, V>&)> predicate);
+
 		Map<K, V>& operator=(const Map<K, V>& other);
 		Map<K, V>& operator=(Map<K, V>&& other);
 
@@ -149,6 +151,20 @@ namespace DS
 			}
 		}
 		return false;
+	}
+
+	template<typename K, typename V>
+	Map<K, V> Map<K, V>::filter(std::function<bool(const MapEntry<K, V>&)> predicate)
+	{
+		Map<K, V> filteredMap = Map<K, V>();
+		for (int i = 0; i < size; ++i)
+		{
+			if (predicate(entries[i]))
+			{
+				filteredMap.put(entries[i].key, entries[i].value);
+			}
+		}
+		return filteredMap;
 	}
 
 	template<typename K, typename V>
