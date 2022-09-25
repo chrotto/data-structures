@@ -15,7 +15,7 @@ namespace DS
 
 		const K& getKey() const;
 		void setKey(K inKey);
-		const V& getValue() const;
+		V& getValue();
 		void setValue(V inValue);
 	};
 
@@ -43,6 +43,9 @@ namespace DS
 
 		Map<K, V>& operator=(const Map<K, V>& other);
 		Map<K, V>& operator=(Map<K, V>&& other);
+
+		V* const operator[](std::string key);
+		constexpr V* const operator[](std::string key) const;
 
 	private:
 		void resize(int newSize);
@@ -75,7 +78,7 @@ namespace DS
 	}
 
 	template<typename K, typename V>
-	const V& MapEntry<K, V>::getValue() const
+	V& MapEntry<K, V>::getValue()
 	{
 		return value;
 	}
@@ -194,6 +197,20 @@ namespace DS
 			other.entries = tmp;
 		}
 		return *this;
+	}
+
+	template<typename K, typename V>
+	V* const Map<K, V>::operator[](std::string key)
+	{
+		int indexOfKey = indexOf(key);
+		return indexOfKey == -1 ? nullptr : &entries[indexOfKey].getValue();
+	}
+
+	template<typename K, typename V>
+	constexpr V* const Map<K, V>::operator[](std::string key) const
+	{
+		int indexOfKey = indexOf(key);
+		return indexOfKey == -1 ? nullptr : &entries[indexOfKey].getValue();
 	}
 
 	template<typename K, typename V>

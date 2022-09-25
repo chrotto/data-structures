@@ -64,3 +64,23 @@ TEST(Map, ContainsKeyInEmptyMap)
 
 	EXPECT_TRUE(map.containsKey("a"));
 }
+
+TEST(Map, IndexOperatorAccess)
+{
+	DS::Map<std::string, int> map = DS::Map<std::string, int>();
+	map.put("a", 1);
+	map.put("b", 2);
+	map.put("c", 3);
+
+	EXPECT_EQ(*map["a"], 1);
+	EXPECT_EQ(*map["b"], 2);
+	EXPECT_EQ(*map["c"], 3);
+}
+
+TEST(Map, IndexOperatorAccessForNotExistingKey)
+{
+	DS::Map<std::string, int> map = DS::Map<std::string, int>();
+	map.put("a", 1);
+
+	EXPECT_EQ(map["b"], nullptr);
+}
