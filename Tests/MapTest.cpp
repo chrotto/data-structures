@@ -34,3 +34,18 @@ TEST(Map, DoNotAddDuplicateKeys)
 	map.put("a", 2);
 	EXPECT_EQ(map.getSize(), 2);
 }
+
+TEST(Map, EmptyCheckOnEmptyMap)
+{
+	DS::Map<std::string, int> map = DS::Map<std::string, int>();
+
+	EXPECT_TRUE(map.isEmpty());
+}
+
+TEST(Map, EmptyCheckOnNonEmptyMap)
+{
+	DS::Map<std::string, int> map = DS::Map<std::string, int>();
+	map.put("a", 1);
+
+	EXPECT_FALSE(map.isEmpty());
+}

@@ -35,6 +35,7 @@ namespace DS
 		~Map();
 
 		int getSize() const;
+		bool isEmpty() const;
 
 		void put(K key, V value);
 
@@ -122,6 +123,12 @@ namespace DS
 	int Map<K, V>::getSize() const
 	{
 		return size;
+	}
+
+	template<typename K, typename V>
+	bool Map<K, V>::isEmpty() const
+	{
+		return size == 0;
 	}
 
 	template<typename K, typename V>
