@@ -36,8 +36,14 @@ namespace DS
 
 		int getSize() const;
 
+		void put(K key, V value);
+
 		Map<K, V>& operator=(const Map<K, V>& other);
 		Map<K, V>& operator=(Map<K, V>&& other);
+
+	private:
+		void resize(int newSize);
+		int indexOf(K key);
 	};
 
 
@@ -119,6 +125,23 @@ namespace DS
 	}
 
 	template<typename K, typename V>
+	void Map<K, V>::put(K key, V value)
+	{
+		int indexOfKey = indexOf(key);
+		if (indexOfKey != -1)
+		{
+			entries[indexOfKey].setValue(value);
+			return;
+		}
+
+		if (size == maxSize)
+		{
+			resize(maxSize + 1);
+		}
+		entries[size++] = MapEntry(key, value);
+	}
+
+	template<typename K, typename V>
 	Map<K, V>& Map<K, V>::operator=(const Map<K, V>& other)
 	{
 		if (this != &other)
@@ -149,5 +172,42 @@ namespace DS
 			other.entries = tmp;
 		}
 		return *this;
+	}
+
+	template<typename K, typename V>
+	void Map<K, V>::resize(int newSize)
+	{
+		if (newSize == maxSize)
+		{
+			return;
+		}
+		maxSize = newSize;
+
+		if (newSize < size)
+		{
+			size = newSize;
+		}
+
+		MapEntry<K, V>* newEntries = new MapEntry<K, V>[newSize];
+		for (int i = 0; i < size; i++)
+		{
+			newEntries[i] = entries[i];
+		}
+
+		delete[] entries;
+		entries = newEntries;
+	}
+
+	template<typename K, typename V>
+	int Map<K, V>::indexOf(K key)
+	{
+		for (int i = 0; i < size; ++i)
+		{
+			if (entries[i].getKey() == key)
+			{
+				return i;
+			}
+		}
+		return -1;
 	}
 }
