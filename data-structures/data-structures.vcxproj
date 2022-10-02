@@ -139,6 +139,7 @@
     <ClInclude Include="Exceptions\NoSuchElementException.h" />
     <ClInclude Include="Exceptions\OutOfRangeException.h" />
     <ClInclude Include="Exceptions\UnsupportedOperationException.h" />
+    <ClInclude Include="List.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Set.h" />
   </ItemGroup>
