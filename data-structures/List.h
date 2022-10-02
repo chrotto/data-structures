@@ -1,4 +1,5 @@
 #pragma once
+#include "Exceptions/OutOfRangeException.h"
 
 namespace DS
 {
@@ -37,6 +38,9 @@ namespace DS
 		bool isEmpty() const;
 
 		void add(T element);
+
+		T& operator[](int index);
+		constexpr T& operator[](int index) const;
 
 		List<T>& operator=(const List<T>& other);
 		List<T>& operator=(List<T>&& other);
@@ -119,6 +123,38 @@ namespace DS
 			last = newlistElement;
 		}
 		++size;
+	}
+
+	template<typename T>
+	T& List<T>::operator[](int index)
+	{
+		if (index < 0 || index >= size)
+		{
+			throw OutOfRangeException(index);
+		}
+
+		ListElement<T>* elem = first;
+		for (int i = 1; i <= index; ++i)
+		{
+			elem = elem->next;
+		}
+		return elem->value;
+	}
+
+	template<typename T>
+	constexpr T& List<T>::operator[](int index) const
+	{
+		if (index < 0 || index >= size)
+		{
+			throw OutOfRangeException(index);
+		}
+
+		ListElement<T>* elem = first;
+		for (int i = 0; i <= index; ++i)
+		{
+			elem = elem->next;
+		}
+		return elem->value;
 	}
 
 	template<typename T>

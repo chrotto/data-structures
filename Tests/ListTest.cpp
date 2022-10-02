@@ -34,3 +34,24 @@ TEST(List, EmptyCheckOnNonEmptyList)
 
 	EXPECT_FALSE(list.isEmpty());
 }
+
+TEST(List, IndexOperatorAccess)
+{
+	DS::List<int> list = DS::List<int>();
+	list.add(10);
+	list.add(20);
+	list.add(30);
+
+	EXPECT_EQ(list[0], 10);
+	EXPECT_EQ(list[1], 20);
+	EXPECT_EQ(list[2], 30);
+}
+
+TEST(List, IndexOperatorAccessOutOfRange)
+{
+	DS::List<int> list = DS::List<int>();
+	list.add(10);
+
+	EXPECT_THROW(list[1], DS::OutOfRangeException);
+	EXPECT_THROW(list[-1], DS::OutOfRangeException);
+}
