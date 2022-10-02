@@ -19,3 +19,18 @@ TEST(List, AddElementToList)
 	list.add(3);
 	EXPECT_EQ(list.getSize(), 3);
 }
+
+TEST(List, EmptyCheckOnEmptyList)
+{
+	DS::List<int> list = DS::List<int>();
+
+	EXPECT_TRUE(list.isEmpty());
+}
+
+TEST(List, EmptyCheckOnNonEmptyList)
+{
+	DS::List<int> list = DS::List<int>();
+	list.add(1);
+
+	EXPECT_FALSE(list.isEmpty());
+}

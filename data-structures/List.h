@@ -32,6 +32,7 @@ namespace DS
 		~List();
 
 		int getSize() const;
+		bool isEmpty() const;
 
 		void add(T element);
 	};
@@ -62,6 +63,12 @@ namespace DS
 	int List<T>::getSize() const
 	{
 		return size;
+	}
+
+	template<typename T>
+	bool List<T>::isEmpty() const
+	{
+		return size == 0;
 	}
 
 	template<typename T>
