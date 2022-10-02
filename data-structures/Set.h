@@ -26,7 +26,7 @@ namespace DS
 
 		constexpr int getSize() const;
 		bool isEmpty() const;
-		bool contains(T element) const;
+		bool contains(const T element) const;
 		bool any(std::function<bool(const T&)> predicate);
 
 		void add(T element);
@@ -138,7 +138,7 @@ namespace DS
 	}
 
 	template<typename T>
-	bool Set<T>::contains(T element) const
+	bool Set<T>::contains(const T element) const
 	{
 		for (int i = 0; i < size; i++)
 		{

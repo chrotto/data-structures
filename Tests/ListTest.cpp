@@ -138,3 +138,23 @@ TEST(List, FindElementInList)
 
 	EXPECT_EQ(*list.find(predicate), 2);
 }
+
+TEST(List, ContainsElement)
+{
+	DS::List<int> list = DS::List<int>();
+	list.add(10);
+	list.add(20);
+	list.add(30);
+
+	EXPECT_TRUE(list.contains(10));
+	EXPECT_TRUE(list.contains(20));
+	EXPECT_TRUE(list.contains(30));
+	EXPECT_FALSE(list.contains(40));
+}
+
+TEST(List, ContainsElementInEmptyArry)
+{
+	DS::List<int> list = DS::List<int>();
+
+	EXPECT_FALSE(list.contains(10));
+}
