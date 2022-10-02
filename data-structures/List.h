@@ -32,6 +32,8 @@ namespace DS
 		~List();
 
 		int getSize() const;
+
+		void add(T element);
 	};
 
 	template<typename T>
@@ -60,5 +62,23 @@ namespace DS
 	int List<T>::getSize() const
 	{
 		return size;
+	}
+
+	template<typename T>
+	void List<T>::add(T element)
+	{
+		ListElement<T>* newlistElement = new ListElement<T>(element);
+
+		if (last == nullptr)
+		{
+			first = last = newlistElement;
+		}
+		else
+		{
+			last->next = newlistElement;
+			newlistElement->prev = last;
+			last = newlistElement;
+		}
+		++size;
 	}
 }
