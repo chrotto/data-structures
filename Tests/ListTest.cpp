@@ -158,3 +158,35 @@ TEST(List, ContainsElementInEmptyArry)
 
 	EXPECT_FALSE(list.contains(10));
 }
+
+TEST(List, ContainsOneElementFulfillingThePredicate)
+{
+	DS::List<int> list = DS::List<int>();
+	list.add(1);
+	list.add(2);
+	list.add(3);
+	list.add(4);
+
+	auto predicate = [](const int& x) { return x % 2 == 0; };
+	EXPECT_TRUE(list.any(predicate));
+}
+
+TEST(List, ContainsNoElementFulfillingThePredicate)
+{
+	DS::List<int> list = DS::List<int>();
+	list.add(1);
+	list.add(2);
+	list.add(3);
+	list.add(4);
+
+	auto predicate = [](const int& x) { return x == 0; };
+	EXPECT_FALSE(list.any(predicate));
+}
+
+TEST(List, ContainsNoElementFulfillingThePredicateInEmptyList)
+{
+	DS::List<int> list = DS::List<int>();
+
+	auto predicate = [](const int& x) { return x == 0; };
+	EXPECT_FALSE(list.any(predicate));
+}

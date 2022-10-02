@@ -49,6 +49,7 @@ namespace DS
 		T* find(std::function<bool(const T&)> predicate);
 
 		bool contains(const T element) const;
+		bool any(std::function<bool(const T&)> predicate);
 
 		T& operator[](int index);
 		constexpr T& operator[](int index) const;
@@ -187,6 +188,19 @@ namespace DS
 		for (ListElement<T>* elem = firstElement; elem != nullptr; elem = elem->next)
 		{
 			if (elem->value == element)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	template<typename T>
+	bool List<T>::any(std::function<bool(const T&)> predicate)
+	{
+		for (ListElement<T>* elem = firstElement; elem != nullptr; elem = elem->next)
+		{
+			if (predicate(elem->value))
 			{
 				return true;
 			}
