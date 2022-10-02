@@ -29,12 +29,17 @@ namespace DS
 
 	public:
 		List();
+		List(const List<T>& other);
+		List(List<T>&& other);
 		~List();
 
 		int getSize() const;
 		bool isEmpty() const;
 
 		void add(T element);
+
+		List<T>& operator=(const List<T>& other);
+		List<T>& operator=(List<T>&& other);
 	};
 
 	template<typename T>
@@ -47,6 +52,33 @@ namespace DS
 	List<T>::List() : first(nullptr), last(nullptr), size(0)
 	{
 		// Nothing to do
+	}
+
+	template<typename T>
+	List<T>::List(const List<T>& other)
+	{
+		size = 0;
+		first = last = nullptr;
+
+		for (ListElement<T>* elem = other.first, *next = nullptr; elem != nullptr; elem = next)
+		{
+			add(elem->value);
+			next = elem->next;
+		}
+	}
+
+	template<typename T>
+	List<T>::List(List<T>&& other)
+	{
+		size = other.size;
+		first = other.first;
+		last = other.last;
+
+		for (ListElement<T>* elem = other.first, *next = nullptr; elem != nullptr; elem = next)
+		{
+			next = elem->next;
+			elem = nullptr;
+		}
 	}
 
 	template<typename T>
@@ -87,5 +119,40 @@ namespace DS
 			last = newlistElement;
 		}
 		++size;
+	}
+
+	template<typename T>
+	List<T>& List<T>::operator=(const List<T>& other)
+	{
+		if (this != &other)
+		{
+			size = 0;
+			first = last = nullptr;
+
+			for (ListElement<T>* elem = other.first, *next = nullptr; elem != nullptr; elem = next)
+			{
+				add(elem->value);
+				next = elem->next;
+			}
+		}
+		return *this;
+	}
+
+	template<typename T>
+	List<T>& List<T>::operator=(List<T>&& other)
+	{
+		if (this != &other)
+		{
+			size = other.size;
+
+			ListElement<T>* tmp = first;
+			first = other.first;
+			other.first = tmp;
+
+			tmp = last;
+			last = other.last;
+			other.last = tmp;
+		}
+		return *this;
 	}
 }
