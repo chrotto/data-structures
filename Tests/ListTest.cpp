@@ -190,3 +190,27 @@ TEST(List, ContainsNoElementFulfillingThePredicateInEmptyList)
 	auto predicate = [](const int& x) { return x == 0; };
 	EXPECT_FALSE(list.any(predicate));
 }
+
+TEST(List, FilterListByEvenNumbers)
+{
+	DS::List<int> list = DS::List<int>();
+	list.add(1);
+	list.add(2);
+	list.add(5);
+	list.add(6);
+	list.add(6);
+
+	DS::List<int> filteredList = list.filter([](const int& x) { return x % 2 == 0; });
+	EXPECT_EQ(filteredList.getSize(), 3);
+	EXPECT_EQ(filteredList[0], 2);
+	EXPECT_EQ(filteredList[1], 6);
+	EXPECT_EQ(filteredList[2], 6);
+}
+
+TEST(List, FilterListEmptyList)
+{
+	DS::List<int> list = DS::List<int>();
+
+	DS::List<int> filteredList = list.filter([](const int& x) { return x % 2 == 0; });
+	EXPECT_EQ(filteredList.getSize(), 0);
+}

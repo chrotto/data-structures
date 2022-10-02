@@ -51,6 +51,8 @@ namespace DS
 		bool contains(const T element) const;
 		bool any(std::function<bool(const T&)> predicate);
 
+		List<T> filter(std::function<bool(const T&)> predicate);
+
 		T& operator[](int index);
 		constexpr T& operator[](int index) const;
 
@@ -76,10 +78,9 @@ namespace DS
 		size = 0;
 		firstElement = lastElement = nullptr;
 
-		for (ListElement<T>* elem = other.firstElement, *next = nullptr; elem != nullptr; elem = next)
+		for (ListElement<T>* elem = other.firstElement; elem != nullptr; elem = elem->next)
 		{
 			add(elem->value);
-			next = elem->next;
 		}
 	}
 
@@ -90,11 +91,8 @@ namespace DS
 		firstElement = other.firstElement;
 		lastElement = other.lastElement;
 
-		for (ListElement<T>* elem = other.firstElement, *next = nullptr; elem != nullptr; elem = next)
-		{
-			next = elem->next;
-			elem = nullptr;
-		}
+		other.firstElement = nullptr;
+		other.lastElement = nullptr;
 	}
 
 	template<typename T>
@@ -209,6 +207,20 @@ namespace DS
 	}
 
 	template<typename T>
+	List<T> List<T>::filter(std::function<bool(const T&)> predicate)
+	{
+		List<T> filteredList = List<T>();
+		for (ListElement<T>* elem = firstElement; elem != nullptr; elem = elem->next)
+		{
+			if (predicate(elem->value))
+			{
+				filteredList.add(elem->value);
+			}
+		}
+		return filteredList;
+	}
+
+	template<typename T>
 	T& List<T>::operator[](int index)
 	{
 		if (index < 0 || index >= size)
@@ -248,10 +260,9 @@ namespace DS
 			size = 0;
 			firstElement = lastElement = nullptr;
 
-			for (ListElement<T>* elem = other.firstElement, *next = nullptr; elem != nullptr; elem = next)
+			for (ListElement<T>* elem = other.firstElement; elem != nullptr; elem = elem->next)
 			{
 				add(elem->value);
-				next = elem->next;
 			}
 		}
 		return *this;
