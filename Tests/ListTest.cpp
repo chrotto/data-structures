@@ -119,3 +119,22 @@ TEST(List, LastOrNullElementAccessOfEmptyList)
 
 	EXPECT_EQ(list.lastOrNull(), nullptr);
 }
+
+TEST(List, FindElementInEmptyList)
+{
+	DS::List<int> list = DS::List<int>();
+	auto predicate = [](const int& x) { return x % 2 == 0; };
+
+	EXPECT_EQ(list.find(predicate), nullptr);
+}
+
+TEST(List, FindElementInList)
+{
+	DS::List<int> list = DS::List<int>();
+	list.add(1);
+	list.add(2);
+	list.add(3);
+	auto predicate = [](const int& x) { return x % 2 == 0; };
+
+	EXPECT_EQ(*list.find(predicate), 2);
+}

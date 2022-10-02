@@ -1,4 +1,5 @@
 #pragma once
+#include <functional>
 #include "Exceptions/OutOfRangeException.h"
 #include "Exceptions/NoSuchElementException.h"
 
@@ -44,6 +45,8 @@ namespace DS
 		T* firstOrNull();
 		T& last();
 		T* lastOrNull();
+
+		T* find(std::function<bool(const T&)> predicate);
 
 		T& operator[](int index);
 		constexpr T& operator[](int index) const;
@@ -161,6 +164,19 @@ namespace DS
 	T* List<T>::lastOrNull()
 	{
 		return isEmpty() ? nullptr : &(*lastElement).value;
+	}
+
+	template<typename T>
+	T* List<T>::find(std::function<bool(const T&)> predicate)
+	{
+		for (ListElement<T>* elem = firstElement; elem != lastElement; elem = elem->next)
+		{
+			if (predicate(elem->value))
+			{
+				return &(*elem).value;
+			}
+		}
+		return nullptr;
 	}
 
 	template<typename T>
