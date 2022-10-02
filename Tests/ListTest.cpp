@@ -87,3 +87,35 @@ TEST(List, FirstOrNullElementAccessOfEmptyList)
 
 	EXPECT_EQ(list.firstOrNull(), nullptr);
 }
+
+TEST(List, LastElementAccess)
+{
+	DS::List<int> list = DS::List<int>();
+	list.add(10);
+	list.add(20);
+
+	EXPECT_EQ(list.last(), 20);
+}
+
+TEST(List, LastElementAccessWithNoSuchElementException)
+{
+	DS::List<int> list = DS::List<int>();
+
+	EXPECT_THROW(list.last(), DS::NoSuchElementException);
+}
+
+TEST(List, LastOrNullElementAccessOfExistingElement)
+{
+	DS::List<int> list = DS::List<int>();
+	list.add(10);
+	list.add(20);
+
+	EXPECT_EQ(*list.lastOrNull(), 20);
+}
+
+TEST(List, LastOrNullElementAccessOfEmptyList)
+{
+	DS::List<int> list = DS::List<int>();
+
+	EXPECT_EQ(list.lastOrNull(), nullptr);
+}

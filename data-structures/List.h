@@ -42,6 +42,8 @@ namespace DS
 
 		T& first();
 		T* firstOrNull();
+		T& last();
+		T* lastOrNull();
 
 		T& operator[](int index);
 		constexpr T& operator[](int index) const;
@@ -143,6 +145,22 @@ namespace DS
 	T* List<T>::firstOrNull()
 	{
 		return isEmpty() ? nullptr : &(*firstElement).value;
+	}
+
+	template<typename T>
+	T& List<T>::last()
+	{
+		if (isEmpty())
+		{
+			throw NoSuchElementException("The list is empty.");
+		}
+		return lastElement->value;
+	}
+
+	template<typename T>
+	T* List<T>::lastOrNull()
+	{
+		return isEmpty() ? nullptr : &(*lastElement).value;
 	}
 
 	template<typename T>
