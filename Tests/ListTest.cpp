@@ -55,3 +55,35 @@ TEST(List, IndexOperatorAccessOutOfRange)
 	EXPECT_THROW(list[1], DS::OutOfRangeException);
 	EXPECT_THROW(list[-1], DS::OutOfRangeException);
 }
+
+TEST(List, FirstElementAccess)
+{
+	DS::List<int> list = DS::List<int>();
+	list.add(10);
+	list.add(20);
+
+	EXPECT_EQ(list.first(), 10);
+}
+
+TEST(List, FirstElementAccessWithNoSuchElementException)
+{
+	DS::List<int> list = DS::List<int>();
+
+	EXPECT_THROW(list.first(), DS::NoSuchElementException);
+}
+
+TEST(List, FirstOrNullElementAccessOfExistingElement)
+{
+	DS::List<int> list = DS::List<int>();
+	list.add(10);
+	list.add(20);
+
+	EXPECT_EQ(*list.firstOrNull(), 10);
+}
+
+TEST(List, FirstOrNullElementAccessOfEmptyList)
+{
+	DS::List<int> list = DS::List<int>();
+
+	EXPECT_EQ(list.firstOrNull(), nullptr);
+}

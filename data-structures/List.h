@@ -1,5 +1,6 @@
 #pragma once
 #include "Exceptions/OutOfRangeException.h"
+#include "Exceptions/NoSuchElementException.h"
 
 namespace DS
 {
@@ -24,8 +25,8 @@ namespace DS
 	class List
 	{
 	private:
-		ListElement<T>* first;
-		ListElement<T>* last;
+		ListElement<T>* firstElement;
+		ListElement<T>* lastElement;
 		int size;
 
 	public:
@@ -38,6 +39,9 @@ namespace DS
 		bool isEmpty() const;
 
 		void add(T element);
+
+		T& first();
+		T* firstOrNull();
 
 		T& operator[](int index);
 		constexpr T& operator[](int index) const;
@@ -53,7 +57,7 @@ namespace DS
 	}
 	
 	template<typename T>
-	List<T>::List() : first(nullptr), last(nullptr), size(0)
+	List<T>::List() : firstElement(nullptr), lastElement(nullptr), size(0)
 	{
 		// Nothing to do
 	}
@@ -62,9 +66,9 @@ namespace DS
 	List<T>::List(const List<T>& other)
 	{
 		size = 0;
-		first = last = nullptr;
+		firstElement = lastElement = nullptr;
 
-		for (ListElement<T>* elem = other.first, *next = nullptr; elem != nullptr; elem = next)
+		for (ListElement<T>* elem = other.firstElement, *next = nullptr; elem != nullptr; elem = next)
 		{
 			add(elem->value);
 			next = elem->next;
@@ -75,10 +79,10 @@ namespace DS
 	List<T>::List(List<T>&& other)
 	{
 		size = other.size;
-		first = other.first;
-		last = other.last;
+		firstElement = other.firstElement;
+		lastElement = other.lastElement;
 
-		for (ListElement<T>* elem = other.first, *next = nullptr; elem != nullptr; elem = next)
+		for (ListElement<T>* elem = other.firstElement, *next = nullptr; elem != nullptr; elem = next)
 		{
 			next = elem->next;
 			elem = nullptr;
@@ -88,7 +92,7 @@ namespace DS
 	template<typename T>
 	List<T>::~List()
 	{
-		for (ListElement<T>* elem = first, *next = nullptr; elem != nullptr; elem = next)
+		for (ListElement<T>* elem = firstElement, *next = nullptr; elem != nullptr; elem = next)
 		{
 			next = elem->next;
 			delete elem;
@@ -112,17 +116,33 @@ namespace DS
 	{
 		ListElement<T>* newlistElement = new ListElement<T>(element);
 
-		if (last == nullptr)
+		if (lastElement == nullptr)
 		{
-			first = last = newlistElement;
+			firstElement = lastElement = newlistElement;
 		}
 		else
 		{
-			last->next = newlistElement;
-			newlistElement->prev = last;
-			last = newlistElement;
+			lastElement->next = newlistElement;
+			newlistElement->prev = lastElement;
+			lastElement = newlistElement;
 		}
 		++size;
+	}
+
+	template<typename T>
+	T& List<T>::first()
+	{
+		if (isEmpty())
+		{
+			throw NoSuchElementException("The list is empty.");
+		}
+		return firstElement->value;
+	}
+
+	template<typename T>
+	T* List<T>::firstOrNull()
+	{
+		return isEmpty() ? nullptr : &(*firstElement).value;
 	}
 
 	template<typename T>
@@ -133,7 +153,7 @@ namespace DS
 			throw OutOfRangeException(index);
 		}
 
-		ListElement<T>* elem = first;
+		ListElement<T>* elem = firstElement;
 		for (int i = 1; i <= index; ++i)
 		{
 			elem = elem->next;
@@ -149,7 +169,7 @@ namespace DS
 			throw OutOfRangeException(index);
 		}
 
-		ListElement<T>* elem = first;
+		ListElement<T>* elem = firstElement;
 		for (int i = 0; i <= index; ++i)
 		{
 			elem = elem->next;
@@ -163,9 +183,9 @@ namespace DS
 		if (this != &other)
 		{
 			size = 0;
-			first = last = nullptr;
+			firstElement = lastElement = nullptr;
 
-			for (ListElement<T>* elem = other.first, *next = nullptr; elem != nullptr; elem = next)
+			for (ListElement<T>* elem = other.firstElement, *next = nullptr; elem != nullptr; elem = next)
 			{
 				add(elem->value);
 				next = elem->next;
@@ -181,13 +201,13 @@ namespace DS
 		{
 			size = other.size;
 
-			ListElement<T>* tmp = first;
-			first = other.first;
-			other.first = tmp;
+			ListElement<T>* tmp = firstElement;
+			firstElement = other.firstElement;
+			other.firstElement = tmp;
 
-			tmp = last;
-			last = other.last;
-			other.last = tmp;
+			tmp = lastElement;
+			lastElement = other.lastElement;
+			other.lastElement = tmp;
 		}
 		return *this;
 	}
