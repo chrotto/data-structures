@@ -324,3 +324,32 @@ TEST(List, FoldListWithMultipleElements)
 
 	EXPECT_EQ(list.fold<int>(operation, 4), 10);
 }
+
+TEST(List, CopyAssignmentOperator)
+{
+	DS::List<int> list = DS::List<int>();
+	list.add(1);
+	list.add(2);
+	DS::List<int> list2 = DS::List<int>();
+	list2 = list;
+
+	EXPECT_EQ(list.getSize(), 2);
+	EXPECT_EQ(list[0], 1);
+	EXPECT_EQ(list[1], 2);
+	EXPECT_EQ(list2.getSize(), 2);
+	EXPECT_EQ(list2[0], 1);
+	EXPECT_EQ(list2[1], 2);
+}
+
+TEST(List, MoveAssignmentOperator)
+{
+	DS::List<int> list = DS::List<int>();
+	list.add(1);
+	list.add(2);
+	DS::List<int> list2 = DS::List<int>();
+	list2 = std::move(list);
+
+	EXPECT_EQ(list2.getSize(), 2);
+	EXPECT_EQ(list2[0], 1);
+	EXPECT_EQ(list2[1], 2);
+}
