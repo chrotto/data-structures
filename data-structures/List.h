@@ -52,6 +52,8 @@ namespace DS
 		bool any(std::function<bool(const T&)> predicate);
 
 		List<T> filter(std::function<bool(const T&)> predicate);
+		template<typename R>
+		List<R> map(std::function<R(T)> transform);
 
 		T& operator[](int index);
 		constexpr T& operator[](int index) const;
@@ -284,5 +286,17 @@ namespace DS
 			other.lastElement = tmp;
 		}
 		return *this;
+	}
+	
+	template<typename T>
+	template<typename R>
+	List<R> List<T>::map(std::function<R(T)> transform)
+	{
+		List<R> mappedList = List<R>();
+		for (ListElement<T>* elem = firstElement; elem != nullptr; elem = elem->next)
+		{
+			mappedList.add(transform(elem->value));
+		}
+		return mappedList;
 	}
 }

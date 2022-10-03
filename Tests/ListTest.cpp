@@ -214,3 +214,57 @@ TEST(List, FilterListEmptyList)
 	DS::List<int> filteredList = list.filter([](const int& x) { return x % 2 == 0; });
 	EXPECT_EQ(filteredList.getSize(), 0);
 }
+
+TEST(List, MapListOfEvenNumbersToOddNumbers)
+{
+	DS::List<int> list = DS::List<int>();
+	list.add(2);
+	list.add(4);
+	list.add(6);
+	list.add(8);
+
+	auto transform = [](int x) {return x + 1; };
+	DS::List<int> mappedList = list.map<int>(transform);
+
+	EXPECT_EQ(list[0], 2);
+	EXPECT_EQ(list[1], 4);
+	EXPECT_EQ(list[2], 6);
+	EXPECT_EQ(list[3], 8);
+
+	EXPECT_EQ(mappedList[0], 3);
+	EXPECT_EQ(mappedList[1], 5);
+	EXPECT_EQ(mappedList[2], 7);
+	EXPECT_EQ(mappedList[3], 9);
+}
+
+TEST(List, MapListOfIntsToStrings)
+{
+	DS::List<int> list = DS::List<int>();
+	list.add(2);
+	list.add(4);
+	list.add(6);
+	list.add(8);
+
+	auto transform = [](int x) {return std::to_string(x); };
+	DS::List<std::string> mappedList = list.map<std::string>(transform);
+
+	EXPECT_EQ(list[0], 2);
+	EXPECT_EQ(list[1], 4);
+	EXPECT_EQ(list[2], 6);
+	EXPECT_EQ(list[3], 8);
+
+	EXPECT_EQ(mappedList[0], "2");
+	EXPECT_EQ(mappedList[1], "4");
+	EXPECT_EQ(mappedList[2], "6");
+	EXPECT_EQ(mappedList[3], "8");
+}
+
+TEST(List, MapOfEmptyList)
+{
+	DS::List<int> list = DS::List<int>();
+
+	auto transform = [](int x) {return x + 1; };
+	DS::List<int> mappedList = list.map<int>(transform);
+
+	EXPECT_TRUE(mappedList.isEmpty());
+}
