@@ -2,6 +2,7 @@
 #include <functional>
 #include "Exceptions/OutOfRangeException.h"
 #include "Exceptions/NoSuchElementException.h"
+#include "Exceptions/UnsupportedOperationException.h"
 
 namespace DS
 {
@@ -54,6 +55,9 @@ namespace DS
 		List<T> filter(std::function<bool(const T&)> predicate);
 		template<typename R>
 		List<R> map(std::function<R(T)> transform);
+		T reduce(std::function<T(T, const T&)> operation);
+		template<typename S>
+		S fold(std::function<S(S, const T&)> operation, S initialValue);
 
 		T& operator[](int index);
 		constexpr T& operator[](int index) const;
@@ -223,6 +227,51 @@ namespace DS
 	}
 
 	template<typename T>
+	template<typename R>
+	List<R> List<T>::map(std::function<R(T)> transform)
+	{
+		List<R> mappedList = List<R>();
+		for (ListElement<T>* elem = firstElement; elem != nullptr; elem = elem->next)
+		{
+			mappedList.add(transform(elem->value));
+		}
+		return mappedList;
+	}
+
+	template<typename T>
+	T List<T>::reduce(std::function<T(T, const T&)> operation)
+	{
+		if (isEmpty())
+		{
+			throw UnsupportedOperationException();
+		}
+
+		T acc = firstElement->value;
+		for (ListElement<T>* elem = firstElement->next; elem != nullptr; elem = elem->next)
+		{
+			acc = operation(acc, elem->value);
+		}
+		return acc;
+	}
+
+	template<typename T>
+	template<typename S>
+	S List<T>::fold(std::function<S(S, const T&)> operation, S initialValue)
+	{
+		if (isEmpty())
+		{
+			return initialValue;
+		}
+
+		S acc = initialValue;
+		for (ListElement<T>* elem = firstElement; elem != nullptr; elem = elem->next)
+		{
+			acc = operation(acc, elem->value);
+		}
+		return acc;
+	}
+
+	template<typename T>
 	T& List<T>::operator[](int index)
 	{
 		if (index < 0 || index >= size)
@@ -286,17 +335,5 @@ namespace DS
 			other.lastElement = tmp;
 		}
 		return *this;
-	}
-	
-	template<typename T>
-	template<typename R>
-	List<R> List<T>::map(std::function<R(T)> transform)
-	{
-		List<R> mappedList = List<R>();
-		for (ListElement<T>* elem = firstElement; elem != nullptr; elem = elem->next)
-		{
-			mappedList.add(transform(elem->value));
-		}
-		return mappedList;
 	}
 }

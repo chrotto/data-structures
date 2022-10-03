@@ -268,3 +268,59 @@ TEST(List, MapOfEmptyList)
 
 	EXPECT_TRUE(mappedList.isEmpty());
 }
+
+TEST(List, ReduceEmptyList)
+{
+	DS::List<int> list = DS::List<int>();
+	auto operation = [](int acc, const int& x) { return acc + x; };
+
+	EXPECT_THROW(list.reduce(operation), DS::UnsupportedOperationException);
+}
+
+TEST(List, ReduceListWithOneElement)
+{
+	DS::List<int> list = DS::List<int>();
+	list.add(1);
+	auto operation = [](int acc, const int& x) { return acc + x; };
+
+	EXPECT_EQ(list.reduce(operation), 1);
+}
+
+TEST(List, ReduceListWithMultipleElements)
+{
+	DS::List<int> list = DS::List<int>();
+	list.add(1);
+	list.add(2);
+	list.add(3);
+	auto operation = [](int acc, const int& x) { return acc + x; };
+
+	EXPECT_EQ(list.reduce(operation), 6);
+}
+
+TEST(List, FoldEmptyList)
+{
+	DS::List<int> list = DS::List<int>();
+	auto operation = [](int acc, const int& x) { return acc + x; };
+
+	EXPECT_EQ(list.fold<int>(operation, 0), 0);
+}
+
+TEST(List, FoldListWithOneElement)
+{
+	DS::List<int> list = DS::List<int>();
+	list.add(1);
+	auto operation = [](int acc, const int& x) { return acc + x; };
+
+	EXPECT_EQ(list.fold<int>(operation, 4), 5);
+}
+
+TEST(List, FoldListWithMultipleElements)
+{
+	DS::List<int> list = DS::List<int>();
+	list.add(1);
+	list.add(2);
+	list.add(3);
+	auto operation = [](int acc, const int& x) { return acc + x; };
+
+	EXPECT_EQ(list.fold<int>(operation, 4), 10);
+}
